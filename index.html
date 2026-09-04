@@ -43,7 +43,7 @@
 
   /* HEADER */
   header{
-    padding:22px 18px 14px;
+    padding:14px 16px 10px;
     text-align:center;
   }
   .brand{
@@ -51,40 +51,40 @@
     align-items:center;
     justify-content:center;
     gap:8px;
-    margin-bottom:4px;
+    margin-bottom:2px;
   }
   .brand .icon{
-    font-size:26px;
+    font-size:22px;
     filter:drop-shadow(0 2px 6px rgba(235,154,63,.5));
   }
   header h1{
-    font-size:19px;
+    font-size:17px;
     margin:0;
     font-weight:800;
     letter-spacing:.01em;
   }
   header .tagline{
-    font-size:12px;
+    font-size:11px;
     color:var(--sub);
-    margin:2px 0 16px;
+    margin:2px 0 10px;
   }
 
   .tabs{
     display:flex;
     gap:4px;
     background:var(--card-solid);
-    padding:5px;
-    border-radius:16px;
+    padding:4px;
+    border-radius:14px;
     border:1px solid var(--border);
   }
   .tab-btn{
     flex:1;
-    padding:11px 4px;
+    padding:9px 4px;
     border:none;
-    border-radius:12px;
+    border-radius:10px;
     background:transparent;
     color:var(--sub);
-    font-size:13px;
+    font-size:12.5px;
     font-weight:700;
     cursor:pointer;
     transition:background .15s, color .15s;
@@ -94,7 +94,7 @@
     color:#241304;
   }
 
-  main{padding:16px;}
+  main{padding:12px;}
   .hidden{display:none;}
 
   /* CARDS */
@@ -102,63 +102,86 @@
     background:var(--card);
     border:1px solid var(--border);
     border-radius:var(--radius-lg);
-    padding:18px;
-    margin-bottom:14px;
+    padding:14px;
+    margin-bottom:10px;
   }
   .card h2{
-    font-size:12.5px;
-    margin:0 0 12px;
+    font-size:11.5px;
+    margin:0 0 9px;
     color:var(--sub);
     font-weight:800;
     text-transform:uppercase;
     letter-spacing:.06em;
   }
 
-  /* FİYAT */
+  /* FİYAT — iki sütun */
+  .price-cols{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .price-col{
+    background:var(--card-soft);
+    border-radius:var(--radius-md);
+    padding:10px;
+  }
+  .price-col .plabel{
+    font-size:10.5px;
+    color:var(--sub);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-bottom:4px;
+  }
   .price-row{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:6px;
   }
-  .price-current{font-size:26px;font-weight:800; color:var(--amber);}
+  .price-current{font-size:19px;font-weight:800; color:var(--amber);}
   .price-edit-btn{
-    padding:9px 14px;
+    padding:7px 10px;
     border:1px solid var(--border);
-    background:var(--card-soft);
+    background:var(--card);
     color:var(--text);
     border-radius:var(--radius-sm);
-    font-size:12.5px;
+    font-size:11px;
     font-weight:700;
     cursor:pointer;
+    white-space:nowrap;
   }
   .price-form{
     display:none;
-    margin-top:12px;
-    gap:8px;
+    margin-top:8px;
+    gap:6px;
   }
   .price-form.open{display:flex;}
   .price-form input{
     flex:1;
-    padding:12px 14px;
+    min-width:0;
+    padding:9px 10px;
     border-radius:var(--radius-sm);
     border:1px solid var(--border);
     background:var(--bg-2);
     color:var(--text);
-    font-size:16px;
+    font-size:15px;
   }
   .price-form button{
-    padding:12px 16px;
+    padding:9px 12px;
     border:none;
     border-radius:var(--radius-sm);
     background:var(--my);
     color:#04220f;
     font-weight:800;
     cursor:pointer;
+    flex-shrink:0;
   }
   .price-hint{
-    font-size:12px;
+    font-size:10.5px;
     color:var(--sub);
-    margin-top:10px;
+    margin-top:6px;
+    line-height:1.4;
   }
 
   /* SATIŞ */
@@ -166,29 +189,29 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:22px;
-    margin-bottom:16px;
+    gap:18px;
+    margin-bottom:12px;
   }
   .qty-btn{
-    width:50px;height:50px;
-    border-radius:15px;
+    width:44px;height:44px;
+    border-radius:13px;
     border:1px solid var(--border);
     background:var(--card-soft);
     color:var(--amber);
-    font-size:24px;
+    font-size:22px;
     font-weight:800;
     cursor:pointer;
   }
   .qty-num{
-    font-size:30px;
+    font-size:26px;
     font-weight:800;
-    min-width:44px;
+    min-width:38px;
     text-align:center;
   }
   .sell-btn{
     width:100%;
-    padding:20px;
-    font-size:19px;
+    padding:15px;
+    font-size:16.5px;
     font-weight:800;
     border:none;
     border-radius:var(--radius-md);
@@ -196,35 +219,75 @@
     color:#241304;
     cursor:pointer;
     letter-spacing:.02em;
-    box-shadow:0 10px 24px -8px rgba(235,154,63,.55);
+    box-shadow:0 8px 18px -8px rgba(235,154,63,.55);
   }
   .sell-btn:active{transform:translateY(1px); box-shadow:0 6px 14px -6px rgba(235,154,63,.5);}
 
   .last-sale{
-    margin-top:14px;
-    font-size:13px;
+    margin-top:10px;
+    font-size:12.5px;
     color:var(--sub);
-    line-height:1.7;
+    line-height:1.6;
     background:var(--card-soft);
     border-radius:var(--radius-sm);
-    padding:10px 12px;
+    padding:9px 11px;
   }
   .last-sale b{color:var(--text);}
+
+  /* SON SATIŞLAR + SİLME */
+  .open-list{margin-top:10px;}
+  .open-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    padding:8px 2px;
+    border-bottom:1px solid var(--border);
+    font-size:12.5px;
+  }
+  .open-item:last-child{border-bottom:none;}
+  .open-item .oi-info{color:var(--sub);}
+  .open-item .oi-info b{color:var(--text);}
+  .open-item .oi-del{
+    flex-shrink:0;
+    width:26px;height:26px;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--danger);
+    font-size:14px;
+    font-weight:800;
+    line-height:1;
+    cursor:pointer;
+  }
+  .undo-btn{
+    width:100%;
+    margin-top:8px;
+    padding:10px;
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    background:transparent;
+    color:var(--sub);
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .undo-btn:active{background:var(--card-soft);}
 
   /* İSTATİSTİK */
   .stats-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px;
+    gap:8px;
   }
   .stat-box{
     background:var(--card-soft);
     border-radius:var(--radius-md);
-    padding:14px 12px;
+    padding:11px 10px;
     text-align:center;
   }
-  .stat-box .label{font-size:11.5px;color:var(--sub);margin-bottom:5px;font-weight:600;}
-  .stat-box .value{font-size:19px;font-weight:800;}
+  .stat-box .label{font-size:10.5px;color:var(--sub);margin-bottom:4px;font-weight:600;}
+  .stat-box .value{font-size:16.5px;font-weight:800;}
   .stat-my .value{color:var(--my);}
   .stat-cafe .value{color:var(--cafe);}
   .stat-amber .value{color:var(--amber);}
@@ -354,29 +417,33 @@
   <!-- ANA EKRAN -->
   <main id="tab-ana">
     <div class="card">
-      <h2>Nargile Fiyatı</h2>
-      <div class="price-row">
-        <div class="price-current" id="priceCurrent">290 TL</div>
-        <button class="price-edit-btn" id="priceEditBtn">Fiyatı Değiştir</button>
+      <h2>Fiyatlar</h2>
+      <div class="price-cols">
+        <div class="price-col">
+          <div class="plabel">Nargile</div>
+          <div class="price-row">
+            <div class="price-current" id="priceCurrent">290 TL</div>
+            <button class="price-edit-btn" id="priceEditBtn">Değiştir</button>
+          </div>
+          <div class="price-form" id="priceForm">
+            <input type="number" id="priceInput" min="1" step="1" placeholder="Yeni fiyat">
+            <button id="priceSaveBtn">Kaydet</button>
+          </div>
+          <div class="price-hint" id="priceHint"></div>
+        </div>
+        <div class="price-col">
+          <div class="plabel">Lüle</div>
+          <div class="price-row">
+            <div class="price-current" id="lulePriceCurrent">150 TL</div>
+            <button class="price-edit-btn" id="luleEditBtn">Değiştir</button>
+          </div>
+          <div class="price-form" id="luleForm">
+            <input type="number" id="luleInput" min="1" step="1" placeholder="Yeni fiyat">
+            <button id="luleSaveBtn">Kaydet</button>
+          </div>
+          <div class="price-hint" id="luleHint"></div>
+        </div>
       </div>
-      <div class="price-form" id="priceForm">
-        <input type="number" id="priceInput" min="1" step="1" placeholder="Yeni fiyat (TL)">
-        <button id="priceSaveBtn">Kaydet</button>
-      </div>
-      <div class="price-hint" id="priceHint"></div>
-    </div>
-
-    <div class="card">
-      <h2>Lüle Fiyatı</h2>
-      <div class="price-row">
-        <div class="price-current" id="lulePriceCurrent">150 TL</div>
-        <button class="price-edit-btn" id="luleEditBtn">Fiyatı Değiştir</button>
-      </div>
-      <div class="price-form" id="luleForm">
-        <input type="number" id="luleInput" min="1" step="1" placeholder="Yeni fiyat (TL)">
-        <button id="luleSaveBtn">Kaydet</button>
-      </div>
-      <div class="price-hint" id="luleHint"></div>
     </div>
 
     <div class="card">
@@ -387,8 +454,10 @@
         <button class="qty-btn" id="qtyPlus">+</button>
       </div>
       <button class="sell-btn" id="sellBtn">NARGİLE SAT</button>
-      <button class="sell-btn" id="luleSellBtn" style="margin-top:10px; background:linear-gradient(180deg,var(--cafe),#3b7bc4); color:#031224; box-shadow:0 10px 22px -10px rgba(95,168,232,.55);">LÜLE SAT</button>
+      <button class="sell-btn" id="luleSellBtn" style="margin-top:8px; background:linear-gradient(180deg,var(--cafe),#3b7bc4); color:#031224; box-shadow:0 8px 18px -8px rgba(95,168,232,.55);">LÜLE SAT</button>
+      <button class="undo-btn" id="undoBtn">↩ Son Satışı Geri Al</button>
       <div class="last-sale" id="lastSale">Henüz satış yapılmadı.</div>
+      <div class="open-list" id="openList"></div>
     </div>
 
     <div class="card">
@@ -574,7 +643,40 @@ function renderOpen(){
   document.getElementById('todayLule').textContent=luleCount;
   document.getElementById('todayRevenue').textContent=fmt(revenue);
   document.getElementById('todayMy').textContent=fmt(my);
+  renderOpenList();
 }
+
+/* ---- YANLIŞ GİRİLEN SATIŞLARI SİLME ---- */
+function renderOpenList(){
+  const wrap=document.getElementById('openList');
+  if(openSales.length===0){ wrap.innerHTML=''; return; }
+  let html='';
+  // en yeni en üstte
+  for(let i=openSales.length-1; i>=0; i--){
+    const s=openSales[i];
+    html+='<div class="open-item"><span class="oi-info">'+s.time+' · <b>'+s.tur+' × '+s.adet+'</b> — '+fmt(s.ciro)+'</span>'+
+      '<button class="oi-del" data-idx="'+i+'" title="Bu satışı sil">✕</button></div>';
+  }
+  wrap.innerHTML=html;
+  wrap.querySelectorAll('.oi-del').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const idx=parseInt(btn.dataset.idx);
+      if(!confirm('Bu satışı silmek istediğine emin misin?')) return;
+      openSales.splice(idx,1);
+      saveJSON(STORAGE_SALES, openSales);
+      document.getElementById('lastSale').textContent = 'Satış silindi.';
+      renderOpen();
+    });
+  });
+}
+document.getElementById('undoBtn').addEventListener('click', ()=>{
+  if(openSales.length===0) return;
+  if(!confirm('Son satışı geri almak istediğine emin misin?')) return;
+  openSales.pop();
+  saveJSON(STORAGE_SALES, openSales);
+  document.getElementById('lastSale').textContent = 'Son satış geri alındı.';
+  renderOpen();
+});
 
 /* ---- WHATSAPP METNİ ---- */
 function buildWaText(title, dateLabel, timeLabel, count, luleCount, revenue){
