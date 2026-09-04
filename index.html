@@ -388,13 +388,9 @@
           <div class="label">Toplam Ciro</div>
           <div class="value" id="todayRevenue">0 TL</div>
         </div>
-        <div class="stat-box stat-my">
-          <div class="label">Benim Payım</div>
+        <div class="stat-box stat-my" style="grid-column:1 / -1;">
+          <div class="label">Benim Payım (%60)</div>
           <div class="value" id="todayMy">0 TL</div>
-        </div>
-        <div class="stat-box stat-cafe">
-          <div class="label">Cafe Payı</div>
-          <div class="value" id="todayCafe">0 TL</div>
         </div>
       </div>
     </div>
@@ -463,7 +459,7 @@ function row(label,value){
 function refreshPriceUI(){
   document.getElementById('priceCurrent').textContent = fmt(PRICE);
   document.getElementById('priceHint').textContent =
-    'Bu fiyata göre: Benim payım '+fmt(MY_SHARE)+' (%60) · Cafe payı '+fmt(CAFE_SHARE)+' (%40)';
+    'Bu fiyata göre benim payım (%60): '+fmt(MY_SHARE);
 }
 document.getElementById('priceEditBtn').addEventListener('click', ()=>{
   const form=document.getElementById('priceForm');
@@ -518,7 +514,7 @@ document.getElementById('sellBtn').addEventListener('click', ()=>{
 
   document.getElementById('lastSale').innerHTML =
     'Son satış: <b>'+record.time+'</b> — '+record.adet+' adet — '+
-    'Ciro: <b>'+fmt(record.ciro)+'</b> · Benim: <b>'+fmt(record.benim)+'</b> · Cafe: <b>'+fmt(record.cafe)+'</b>';
+    'Ciro: <b>'+fmt(record.ciro)+'</b> · Benim payım: <b>'+fmt(record.benim)+'</b>';
 
   qty=1;
   document.getElementById('qtyNum').textContent=qty;
@@ -530,25 +526,17 @@ function renderOpen(){
   const count=openSales.reduce((a,s)=>a+s.adet,0);
   const revenue=openSales.reduce((a,s)=>a+s.ciro,0);
   const my=openSales.reduce((a,s)=>a+s.benim,0);
-  const cafe=openSales.reduce((a,s)=>a+s.cafe,0);
   document.getElementById('todayCount').textContent=count;
   document.getElementById('todayRevenue').textContent=fmt(revenue);
   document.getElementById('todayMy').textContent=fmt(my);
-  document.getElementById('todayCafe').textContent=fmt(cafe);
 }
 
 /* ---- WHATSAPP METNİ ---- */
-function buildWaText(title, dateLabel, timeLabel, count, revenue, my, cafe, list){
+function buildWaText(title, dateLabel, timeLabel, count, revenue){
   let t = '🪔 *'+title+'*\n';
   t += '📅 '+dateLabel+' · 🕒 '+timeLabel+'\n\n';
-  t += '• Toplam Nargile: '+count+' adet\n';
-  t += '• Toplam Ciro: '+fmt(revenue)+'\n';
-  t += '• Benim Payım (%60): '+fmt(my)+'\n';
-  t += '• Cafe Payı (%40): '+fmt(cafe)+'\n';
-  if(list && list.length){
-    t += '\nSatış Detayı:\n';
-    list.forEach(s=>{ t += s.time+' - '+s.adet+' adet - '+fmt(s.ciro)+'\n'; });
-  }
+  t += '• Kaç Nargile Gitti: '+count+' adet\n';
+  t += '• Ciro: '+fmt(revenue)+'\n';
   return t;
 }
 function shareWhatsapp(text){
@@ -595,16 +583,7 @@ function renderZResult(z){
   html+=row('Toplam Nargile', z.count+' adet');
   html+=row('Toplam Ciro', fmt(z.revenue));
   html+=row('Benim Payım (%60)', fmt(z.my));
-  html+=row('Cafe Payı (%40)', fmt(z.cafe));
   html+='</div>';
-
-  const myPct=Math.round((z.my/z.revenue)*100);
-  html+='<div class="card"><h2>Pay Dağılımı</h2><div class="pie-wrap">';
-  html+='<div class="pie" style="background:conic-gradient(var(--my) 0% '+myPct+'%, var(--cafe) '+myPct+'% 100%);"></div>';
-  html+='<div class="legend">';
-  html+='<div><span class="dot" style="background:var(--my)"></span>Benim — %'+myPct+'</div>';
-  html+='<div><span class="dot" style="background:var(--cafe)"></span>Cafe — %'+(100-myPct)+'</div>';
-  html+='</div></div></div>';
 
   html+='<div class="card"><h2>Saat Saat Satışlar</h2><div class="sale-list">';
   z.sales.forEach(s=>{
@@ -616,7 +595,7 @@ function renderZResult(z){
 
   document.getElementById('zResult').innerHTML=html;
   document.getElementById('waZBtn').addEventListener('click', ()=>{
-    const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.revenue, z.my, z.cafe, z.sales);
+    const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.revenue);
     shareWhatsapp(text);
   });
 }
@@ -639,8 +618,7 @@ function renderGecmis(){
     html+='<div class="day-detail" id="detail-'+z.id+'">';
     html+=row('Satılan Nargile', z.count+' adet');
     html+=row('Ciro', fmt(z.revenue));
-    html+=row('Benim Payım', fmt(z.my));
-    html+=row('Cafe Payı', fmt(z.cafe));
+    html+=row('Benim Payım (%60)', fmt(z.my));
     html+='<div class="sale-list">';
     z.sales.forEach(s=>{
       html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.adet+' adet — '+fmt(s.ciro)+'</span></div>';
@@ -664,7 +642,7 @@ function renderGecmis(){
       const id=parseInt(btn.dataset.share);
       const z=zReports.find(r=>r.id===id);
       if(!z) return;
-      const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.revenue, z.my, z.cafe, z.sales);
+      const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.revenue);
       shareWhatsapp(text);
     });
   });
