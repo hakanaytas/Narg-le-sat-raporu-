@@ -3,171 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Nargile Satış Takip</title>
+<title>Nargile Kasa</title>
 <style>
   :root{
-    --bg:#0f172a;
-    --card:#1e293b;
-    --card2:#162032;
-    --border:#2b3a52;
-    --text:#f1f5f9;
-    --sub:#94a3b8;
-    --my:#22c55e;
-    --cafe:#3b82f6;
-    --danger:#ef4444;
-    --radius:16px;
+    --bg-1:#150d08;
+    --bg-2:#0a0603;
+    --card:rgba(255,255,255,0.045);
+    --card-solid:#1c130c;
+    --card-soft:#241a10;
+    --border:rgba(255,255,255,0.09);
+    --text:#f6ede1;
+    --sub:#a9998a;
+    --amber:#eb9a3f;
+    --amber-2:#c9761f;
+    --my:#3ecf8e;
+    --cafe:#5fa8e8;
+    --danger:#f1636b;
+    --radius-lg:22px;
+    --radius-md:16px;
+    --radius-sm:12px;
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
   body{
     margin:0;
-    background:var(--bg);
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(235,154,63,0.14), transparent 60%),
+      linear-gradient(180deg,var(--bg-1),var(--bg-2) 60%);
     color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-    -webkit-tap-highlight-color:transparent;
   }
   .app{
     max-width:480px;
     margin:0 auto;
     min-height:100vh;
-    padding-bottom:24px;
+    padding-bottom:32px;
   }
+
+  /* HEADER */
   header{
-    padding:16px 16px 8px;
+    padding:22px 18px 14px;
     text-align:center;
   }
-  header h1{
-    font-size:20px;
-    margin:0 0 12px;
-  }
-  .tabs{
-    display:flex;
-    gap:8px;
-    background:var(--card2);
-    padding:4px;
-    border-radius:12px;
-  }
-  .tab-btn{
-    flex:1;
-    padding:10px 4px;
-    border:none;
-    border-radius:9px;
-    background:transparent;
-    color:var(--sub);
-    font-size:13px;
-    font-weight:600;
-    cursor:pointer;
-  }
-  .tab-btn.active{
-    background:var(--card);
-    color:var(--text);
-  }
-  main{padding:16px;}
-  .hidden{display:none;}
-
-  .card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:16px;
-    margin-bottom:14px;
-  }
-  .card h2{
-    font-size:14px;
-    margin:0 0 10px;
-    color:var(--sub);
-    font-weight:600;
-    text-transform:uppercase;
-    letter-spacing:.03em;
-  }
-
-  .qty-row{
+  .brand{
     display:flex;
     align-items:center;
     justify-content:center;
-    gap:18px;
+    gap:8px;
+    margin-bottom:4px;
+  }
+  .brand .icon{
+    font-size:26px;
+    filter:drop-shadow(0 2px 6px rgba(235,154,63,.5));
+  }
+  header h1{
+    font-size:19px;
+    margin:0;
+    font-weight:800;
+    letter-spacing:.01em;
+  }
+  header .tagline{
+    font-size:12px;
+    color:var(--sub);
+    margin:2px 0 16px;
+  }
+
+  .tabs{
+    display:flex;
+    gap:4px;
+    background:var(--card-solid);
+    padding:5px;
+    border-radius:16px;
+    border:1px solid var(--border);
+  }
+  .tab-btn{
+    flex:1;
+    padding:11px 4px;
+    border:none;
+    border-radius:12px;
+    background:transparent;
+    color:var(--sub);
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:background .15s, color .15s;
+  }
+  .tab-btn.active{
+    background:linear-gradient(180deg,var(--amber),var(--amber-2));
+    color:#241304;
+  }
+
+  main{padding:16px;}
+  .hidden{display:none;}
+
+  /* CARDS */
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:18px;
     margin-bottom:14px;
   }
-  .qty-btn{
-    width:48px;height:48px;
-    border-radius:14px;
-    border:1px solid var(--border);
-    background:var(--card2);
-    color:var(--text);
-    font-size:22px;
-    font-weight:700;
-    cursor:pointer;
-  }
-  .qty-num{
-    font-size:28px;
-    font-weight:700;
-    min-width:40px;
-    text-align:center;
-  }
-
-  .sell-btn{
-    width:100%;
-    padding:22px;
-    font-size:22px;
-    font-weight:800;
-    border:none;
-    border-radius:18px;
-    background:var(--my);
-    color:#04220f;
-    cursor:pointer;
-    letter-spacing:.02em;
-  }
-  .sell-btn:active{opacity:.85;}
-
-  .last-sale{
-    margin-top:14px;
-    font-size:14px;
+  .card h2{
+    font-size:12.5px;
+    margin:0 0 12px;
     color:var(--sub);
-    line-height:1.6;
-  }
-  .last-sale b{color:var(--text);}
-
-  .stats-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-  .stat-box{
-    background:var(--card2);
-    border-radius:12px;
-    padding:12px;
-    text-align:center;
-  }
-  .stat-box .label{font-size:12px;color:var(--sub);margin-bottom:4px;}
-  .stat-box .value{font-size:18px;font-weight:700;}
-  .stat-my .value{color:var(--my);}
-  .stat-cafe .value{color:var(--cafe);}
-
-  .z-btn{
-    width:100%;
-    padding:16px;
-    font-size:16px;
-    font-weight:700;
-    border:none;
-    border-radius:14px;
-    background:var(--cafe);
-    color:#03142e;
-    cursor:pointer;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.06em;
   }
 
+  /* FİYAT */
   .price-row{
     display:flex;
     justify-content:space-between;
     align-items:center;
   }
-  .price-current{font-size:22px;font-weight:800;}
+  .price-current{font-size:26px;font-weight:800; color:var(--amber);}
   .price-edit-btn{
-    padding:8px 14px;
+    padding:9px 14px;
     border:1px solid var(--border);
-    background:var(--card2);
+    background:var(--card-soft);
     color:var(--text);
-    border-radius:10px;
-    font-size:13px;
-    font-weight:600;
+    border-radius:var(--radius-sm);
+    font-size:12.5px;
+    font-weight:700;
     cursor:pointer;
   }
   .price-form{
@@ -178,89 +139,200 @@
   .price-form.open{display:flex;}
   .price-form input{
     flex:1;
-    padding:12px;
-    border-radius:10px;
+    padding:12px 14px;
+    border-radius:var(--radius-sm);
     border:1px solid var(--border);
-    background:var(--bg);
+    background:var(--bg-2);
     color:var(--text);
     font-size:16px;
   }
   .price-form button{
     padding:12px 16px;
     border:none;
-    border-radius:10px;
+    border-radius:var(--radius-sm);
     background:var(--my);
     color:#04220f;
-    font-weight:700;
+    font-weight:800;
     cursor:pointer;
   }
   .price-hint{
     font-size:12px;
     color:var(--sub);
-    margin-top:8px;
+    margin-top:10px;
+  }
+
+  /* SATIŞ */
+  .qty-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+    margin-bottom:16px;
+  }
+  .qty-btn{
+    width:50px;height:50px;
+    border-radius:15px;
+    border:1px solid var(--border);
+    background:var(--card-soft);
+    color:var(--amber);
+    font-size:24px;
+    font-weight:800;
+    cursor:pointer;
+  }
+  .qty-num{
+    font-size:30px;
+    font-weight:800;
+    min-width:44px;
+    text-align:center;
+  }
+  .sell-btn{
+    width:100%;
+    padding:20px;
+    font-size:19px;
+    font-weight:800;
+    border:none;
+    border-radius:var(--radius-md);
+    background:linear-gradient(180deg,var(--amber),var(--amber-2));
+    color:#241304;
+    cursor:pointer;
+    letter-spacing:.02em;
+    box-shadow:0 10px 24px -8px rgba(235,154,63,.55);
+  }
+  .sell-btn:active{transform:translateY(1px); box-shadow:0 6px 14px -6px rgba(235,154,63,.5);}
+
+  .last-sale{
+    margin-top:14px;
+    font-size:13px;
+    color:var(--sub);
+    line-height:1.7;
+    background:var(--card-soft);
+    border-radius:var(--radius-sm);
+    padding:10px 12px;
+  }
+  .last-sale b{color:var(--text);}
+
+  /* İSTATİSTİK */
+  .stats-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .stat-box{
+    background:var(--card-soft);
+    border-radius:var(--radius-md);
+    padding:14px 12px;
+    text-align:center;
+  }
+  .stat-box .label{font-size:11.5px;color:var(--sub);margin-bottom:5px;font-weight:600;}
+  .stat-box .value{font-size:19px;font-weight:800;}
+  .stat-my .value{color:var(--my);}
+  .stat-cafe .value{color:var(--cafe);}
+  .stat-amber .value{color:var(--amber);}
+
+  /* Z RAPORU */
+  .z-btn{
+    width:100%;
+    padding:18px;
+    font-size:16.5px;
+    font-weight:800;
+    border:none;
+    border-radius:var(--radius-md);
+    background:linear-gradient(180deg,var(--cafe),#3b7bc4);
+    color:#031224;
+    cursor:pointer;
+    box-shadow:0 10px 22px -10px rgba(95,168,232,.55);
+  }
+  .z-hint{
+    font-size:12px;
+    color:var(--sub);
+    margin-top:10px;
+    text-align:center;
   }
 
   .report-row{
     display:flex;
     justify-content:space-between;
-    padding:8px 0;
+    padding:9px 0;
     border-bottom:1px solid var(--border);
     font-size:14px;
   }
   .report-row:last-child{border-bottom:none;}
   .report-row .l{color:var(--sub);}
-  .report-row .r{font-weight:700;}
+  .report-row .r{font-weight:800;}
 
   .pie-wrap{
     display:flex;
     align-items:center;
-    gap:20px;
+    gap:22px;
     justify-content:center;
-    padding:8px 0;
+    padding:6px 0 2px;
   }
   .pie{
-    width:120px;height:120px;
+    width:118px;height:118px;
     border-radius:50%;
     flex-shrink:0;
+    box-shadow: inset 0 0 0 8px var(--bg-2);
   }
-  .legend{font-size:13px;line-height:2;}
+  .legend{font-size:13px;line-height:2.1;}
   .dot{
     display:inline-block;
     width:10px;height:10px;
     border-radius:50%;
-    margin-right:6px;
+    margin-right:7px;
   }
 
-  .sale-list{margin-top:6px;}
+  .sale-list{margin-top:8px;}
   .sale-item{
     display:flex;
     justify-content:space-between;
     font-size:13px;
-    padding:7px 0;
+    padding:8px 0;
     border-bottom:1px solid var(--border);
     color:var(--sub);
   }
   .sale-item:last-child{border-bottom:none;}
-  .sale-item .t{color:var(--text);font-weight:600;}
+  .sale-item .t{color:var(--text);font-weight:700;}
 
   .empty{
     text-align:center;
     color:var(--sub);
-    font-size:14px;
-    padding:20px 0;
+    font-size:13.5px;
+    padding:22px 0;
   }
 
+  /* WHATSAPP */
+  .wa-btn{
+    width:100%;
+    margin-top:4px;
+    padding:14px;
+    border:none;
+    border-radius:var(--radius-md);
+    background:#22c55e;
+    color:#062b12;
+    font-size:14.5px;
+    font-weight:800;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .wa-btn .wa-ico{font-size:17px;}
+
+  /* GEÇMİŞ */
   .day-card{cursor:pointer;}
   .day-head{
     display:flex;
     justify-content:space-between;
     align-items:center;
   }
-  .day-head .date{font-weight:700;font-size:15px;}
-  .day-head .count{font-size:13px;color:var(--sub);}
+  .day-head .date{font-weight:800;font-size:14.5px;}
+  .day-head .date .time{color:var(--sub); font-weight:600; font-size:12px; display:block; margin-top:2px;}
+  .day-head .count{font-size:13px;color:var(--sub); text-align:right;}
+  .day-head .count b{color:var(--amber); display:block; font-size:15px;}
   .day-detail{
-    margin-top:10px;
-    padding-top:10px;
+    margin-top:12px;
+    padding-top:12px;
     border-top:1px solid var(--border);
     display:none;
   }
@@ -270,7 +342,8 @@
 <body>
 <div class="app">
   <header>
-    <h1>🪔 Nargile Satış Takip</h1>
+    <div class="brand"><span class="icon">🪔</span><h1>Nargile Kasa</h1></div>
+    <div class="tagline">Satış · Z Raporu · Geçmiş</div>
     <div class="tabs">
       <button class="tab-btn active" data-tab="ana">Ana Ekran</button>
       <button class="tab-btn" data-tab="z">Z Raporu</button>
@@ -301,17 +374,17 @@
         <button class="qty-btn" id="qtyPlus">+</button>
       </div>
       <button class="sell-btn" id="sellBtn">NARGİLE SAT</button>
-      <div class="last-sale" id="lastSale"></div>
+      <div class="last-sale" id="lastSale">Henüz satış yapılmadı.</div>
     </div>
 
     <div class="card">
-      <h2>Bugün</h2>
+      <h2>Açık Vardiya (Son Z'den Beri)</h2>
       <div class="stats-grid">
-        <div class="stat-box">
+        <div class="stat-box stat-amber">
           <div class="label">Nargile Adedi</div>
           <div class="value" id="todayCount">0</div>
         </div>
-        <div class="stat-box">
+        <div class="stat-box stat-amber">
           <div class="label">Toplam Ciro</div>
           <div class="value" id="todayRevenue">0 TL</div>
         </div>
@@ -331,6 +404,7 @@
   <main id="tab-z" class="hidden">
     <div class="card">
       <button class="z-btn" id="zBtn">Z RAPORU AL</button>
+      <div class="z-hint">Z raporu alındığında açık vardiya kapanır ve sayaç sıfırlanır. Satışlar silinmez, geçmişe kaydedilir.</div>
     </div>
     <div id="zResult"></div>
   </main>
@@ -342,55 +416,55 @@
 </div>
 
 <script>
-const STORAGE_KEY="nargile_sales_v1";
-const PRICE_KEY="nargile_price_v1";
+const STORAGE_SALES="nargile_open_sales_v2";
+const STORAGE_Z="nargile_z_reports_v2";
+const STORAGE_PRICE="nargile_price_v2";
 const MY_RATE=0.6, CAFE_RATE=0.4;
+const WA_NUMBER="905363320789"; // 0536 332 07 89
 
-function loadSales(){
-  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch(e){ return []; }
+function loadJSON(key, fallback){
+  try{ const v=JSON.parse(localStorage.getItem(key)); return v!==null ? v : fallback; }
+  catch(e){ return fallback; }
 }
-function saveSales(sales){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sales));
-}
+function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
 function loadPrice(){
-  const p=parseFloat(localStorage.getItem(PRICE_KEY));
+  const p=parseFloat(localStorage.getItem(STORAGE_PRICE));
   return (!isNaN(p) && p>0) ? p : 290;
 }
-function savePrice(p){
-  localStorage.setItem(PRICE_KEY, p);
-}
+function savePrice(p){ localStorage.setItem(STORAGE_PRICE, p); }
 
-let sales = loadSales();
+let openSales = loadJSON(STORAGE_SALES, []);
+let zReports = loadJSON(STORAGE_Z, []);
 let PRICE = loadPrice();
 let MY_SHARE = Math.round(PRICE*MY_RATE);
 let CAFE_SHARE = PRICE - MY_SHARE;
 let qty = 1;
 
+function pad(n){ return n.toString().padStart(2,'0'); }
+function nowDate(){
+  const d=new Date();
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+}
+function nowTime(){
+  const d=new Date();
+  return pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+}
+function fmt(n){ return Math.round(n).toLocaleString('tr-TR')+' TL'; }
+function displayDate(dateStr){
+  const [y,m,d]=dateStr.split('-');
+  return d+'.'+m+'.'+y;
+}
+function row(label,value){
+  return '<div class="report-row"><span class="l">'+label+'</span><span class="r">'+value+'</span></div>';
+}
+
+/* ---- FİYAT ---- */
 function refreshPriceUI(){
   document.getElementById('priceCurrent').textContent = fmt(PRICE);
   document.getElementById('priceHint').textContent =
     'Bu fiyata göre: Benim payım '+fmt(MY_SHARE)+' (%60) · Cafe payı '+fmt(CAFE_SHARE)+' (%40)';
 }
-
-function pad(n){ return n.toString().padStart(2,'0'); }
-function todayStr(){
-  const d=new Date();
-  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-}
-function timeStr(){
-  const d=new Date();
-  return pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
-}
-function fmt(n){
-  return n.toLocaleString('tr-TR')+' TL';
-}
-function displayDate(dateStr){
-  const [y,m,d]=dateStr.split('-');
-  return d+'.'+m+'.'+y;
-}
-
-/* ---- FİYAT AYARI ---- */
 document.getElementById('priceEditBtn').addEventListener('click', ()=>{
   const form=document.getElementById('priceForm');
   form.classList.toggle('open');
@@ -399,10 +473,7 @@ document.getElementById('priceEditBtn').addEventListener('click', ()=>{
 });
 document.getElementById('priceSaveBtn').addEventListener('click', ()=>{
   const val=parseFloat(document.getElementById('priceInput').value);
-  if(isNaN(val) || val<=0){
-    alert('Lütfen geçerli bir fiyat girin.');
-    return;
-  }
+  if(isNaN(val) || val<=0){ alert('Lütfen geçerli bir fiyat girin.'); return; }
   PRICE=val;
   MY_SHARE=Math.round(PRICE*MY_RATE);
   CAFE_SHARE=PRICE-MY_SHARE;
@@ -410,9 +481,8 @@ document.getElementById('priceSaveBtn').addEventListener('click', ()=>{
   refreshPriceUI();
   document.getElementById('priceForm').classList.remove('open');
 });
-refreshPriceUI();
 
-/* ---- TAB NAVIGASYON ---- */
+/* ---- TAB NAVİGASYON ---- */
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -436,15 +506,15 @@ document.getElementById('qtyMinus').addEventListener('click', ()=>{
 /* ---- SATIŞ ---- */
 document.getElementById('sellBtn').addEventListener('click', ()=>{
   const record={
-    date: todayStr(),
-    time: timeStr(),
+    date: nowDate(),
+    time: nowTime(),
     adet: qty,
     ciro: qty*PRICE,
     benim: qty*MY_SHARE,
     cafe: qty*CAFE_SHARE
   };
-  sales.push(record);
-  saveSales(sales);
+  openSales.push(record);
+  saveJSON(STORAGE_SALES, openSales);
 
   document.getElementById('lastSale').innerHTML =
     'Son satış: <b>'+record.time+'</b> — '+record.adet+' adet — '+
@@ -452,117 +522,157 @@ document.getElementById('sellBtn').addEventListener('click', ()=>{
 
   qty=1;
   document.getElementById('qtyNum').textContent=qty;
-  renderToday();
+  renderOpen();
 });
 
-/* ---- BUGÜNKÜ İSTATİSTİK ---- */
-function todaysSales(){
-  const t=todayStr();
-  return sales.filter(s=>s.date===t);
-}
-function renderToday(){
-  const list=todaysSales();
-  const count=list.reduce((a,s)=>a+s.adet,0);
-  const revenue=list.reduce((a,s)=>a+s.ciro,0);
-  const my=list.reduce((a,s)=>a+s.benim,0);
-  const cafe=list.reduce((a,s)=>a+s.cafe,0);
+/* ---- AÇIK VARDİYA İSTATİSTİĞİ ---- */
+function renderOpen(){
+  const count=openSales.reduce((a,s)=>a+s.adet,0);
+  const revenue=openSales.reduce((a,s)=>a+s.ciro,0);
+  const my=openSales.reduce((a,s)=>a+s.benim,0);
+  const cafe=openSales.reduce((a,s)=>a+s.cafe,0);
   document.getElementById('todayCount').textContent=count;
   document.getElementById('todayRevenue').textContent=fmt(revenue);
   document.getElementById('todayMy').textContent=fmt(my);
   document.getElementById('todayCafe').textContent=fmt(cafe);
 }
 
-/* ---- Z RAPORU ---- */
+/* ---- WHATSAPP METNİ ---- */
+function buildWaText(title, dateLabel, timeLabel, count, revenue, my, cafe, list){
+  let t = '🪔 *'+title+'*\n';
+  t += '📅 '+dateLabel+' · 🕒 '+timeLabel+'\n\n';
+  t += '• Toplam Nargile: '+count+' adet\n';
+  t += '• Toplam Ciro: '+fmt(revenue)+'\n';
+  t += '• Benim Payım (%60): '+fmt(my)+'\n';
+  t += '• Cafe Payı (%40): '+fmt(cafe)+'\n';
+  if(list && list.length){
+    t += '\nSatış Detayı:\n';
+    list.forEach(s=>{ t += s.time+' - '+s.adet+' adet - '+fmt(s.ciro)+'\n'; });
+  }
+  return t;
+}
+function shareWhatsapp(text){
+  const url = 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(text);
+  window.open(url, '_blank');
+}
+
+/* ---- Z RAPORU AL ---- */
 document.getElementById('zBtn').addEventListener('click', ()=>{
-  const list=todaysSales();
-  const count=list.reduce((a,s)=>a+s.adet,0);
-  const revenue=list.reduce((a,s)=>a+s.ciro,0);
-  const my=list.reduce((a,s)=>a+s.benim,0);
-  const cafe=list.reduce((a,s)=>a+s.cafe,0);
-
-  let html='<div class="card">';
-  html+='<h2>Z Raporu — '+displayDate(todayStr())+'</h2>';
-  html+=row('Toplam Nargile', count+' adet');
-  html+=row('Toplam Ciro', fmt(revenue));
-  html+=row('Benim Payım (%60)', fmt(my));
-  html+=row('Cafe Payı (%40)', fmt(cafe));
-  html+='</div>';
-
-  if(count>0){
-    const myPct=Math.round((my/revenue)*100);
-    html+='<div class="card"><h2>Pay Dağılımı</h2><div class="pie-wrap">';
-    html+='<div class="pie" style="background:conic-gradient(var(--my) 0% '+myPct+'%, var(--cafe) '+myPct+'% 100%);"></div>';
-    html+='<div class="legend">';
-    html+='<div><span class="dot" style="background:var(--my)"></span>Benim — %'+myPct+'</div>';
-    html+='<div><span class="dot" style="background:var(--cafe)"></span>Cafe — %'+(100-myPct)+'</div>';
-    html+='</div></div></div>';
+  if(openSales.length===0){
+    document.getElementById('zResult').innerHTML =
+      '<div class="card"><div class="empty">Kapatılacak açık satış yok. Önce nargile sat.</div></div>';
+    return;
   }
+  const count=openSales.reduce((a,s)=>a+s.adet,0);
+  const revenue=openSales.reduce((a,s)=>a+s.ciro,0);
+  const my=openSales.reduce((a,s)=>a+s.benim,0);
+  const cafe=openSales.reduce((a,s)=>a+s.cafe,0);
+  const closedDate=nowDate();
+  const closedTime=nowTime();
 
-  html+='<div class="card"><h2>Saat Saat Satışlar</h2><div class="sale-list">';
-  if(list.length===0){
-    html+='<div class="empty">Bugün henüz satış yok.</div>';
-  }else{
-    list.forEach(s=>{
-      html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.adet+' adet — '+fmt(s.ciro)+'</span></div>';
-    });
-  }
-  html+='</div></div>';
+  const zReport={
+    id: Date.now(),
+    date: closedDate,
+    time: closedTime,
+    count, revenue, my, cafe,
+    sales: openSales
+  };
+  zReports.unshift(zReport);
+  saveJSON(STORAGE_Z, zReports);
 
-  document.getElementById('zResult').innerHTML=html;
+  // Vardiyayı kapat: açık satışları sıfırla, geçmiş silinmiyor.
+  openSales = [];
+  saveJSON(STORAGE_SALES, openSales);
+  renderOpen();
+  document.getElementById('lastSale').textContent = 'Z raporu alındı, yeni vardiya başladı.';
+
+  renderZResult(zReport);
 });
 
-function row(label,value){
-  return '<div class="report-row"><span class="l">'+label+'</span><span class="r">'+value+'</span></div>';
+function renderZResult(z){
+  let html='<div class="card">';
+  html+='<h2>Z Raporu — '+displayDate(z.date)+' '+z.time+'</h2>';
+  html+=row('Toplam Nargile', z.count+' adet');
+  html+=row('Toplam Ciro', fmt(z.revenue));
+  html+=row('Benim Payım (%60)', fmt(z.my));
+  html+=row('Cafe Payı (%40)', fmt(z.cafe));
+  html+='</div>';
+
+  const myPct=Math.round((z.my/z.revenue)*100);
+  html+='<div class="card"><h2>Pay Dağılımı</h2><div class="pie-wrap">';
+  html+='<div class="pie" style="background:conic-gradient(var(--my) 0% '+myPct+'%, var(--cafe) '+myPct+'% 100%);"></div>';
+  html+='<div class="legend">';
+  html+='<div><span class="dot" style="background:var(--my)"></span>Benim — %'+myPct+'</div>';
+  html+='<div><span class="dot" style="background:var(--cafe)"></span>Cafe — %'+(100-myPct)+'</div>';
+  html+='</div></div></div>';
+
+  html+='<div class="card"><h2>Saat Saat Satışlar</h2><div class="sale-list">';
+  z.sales.forEach(s=>{
+    html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.adet+' adet — '+fmt(s.ciro)+'</span></div>';
+  });
+  html+='</div>';
+  html+='<button class="wa-btn" id="waZBtn"><span class="wa-ico">💬</span> WhatsApp\'ta Paylaş</button>';
+  html+='</div>';
+
+  document.getElementById('zResult').innerHTML=html;
+  document.getElementById('waZBtn').addEventListener('click', ()=>{
+    const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.revenue, z.my, z.cafe, z.sales);
+    shareWhatsapp(text);
+  });
 }
 
 /* ---- GEÇMİŞ RAPORLAR ---- */
 function renderGecmis(){
-  const days={};
-  sales.forEach(s=>{
-    if(!days[s.date]) days[s.date]={date:s.date, list:[]};
-    days[s.date].list.push(s);
-  });
-  const dateKeys=Object.keys(days).sort().reverse();
-
   const container=document.getElementById('gecmisList');
-  if(dateKeys.length===0){
-    container.innerHTML='<div class="card"><div class="empty">Henüz kayıt yok.</div></div>';
+  if(zReports.length===0){
+    container.innerHTML='<div class="card"><div class="empty">Henüz alınmış bir Z raporu yok.</div></div>';
     return;
   }
 
   let html='';
-  dateKeys.forEach(dk=>{
-    const list=days[dk].list;
-    const count=list.reduce((a,s)=>a+s.adet,0);
-    const revenue=list.reduce((a,s)=>a+s.ciro,0);
-    const my=list.reduce((a,s)=>a+s.benim,0);
-    const cafe=list.reduce((a,s)=>a+s.cafe,0);
-
-    html+='<div class="card day-card" data-date="'+dk+'">';
-    html+='<div class="day-head"><span class="date">'+displayDate(dk)+'</span><span class="count">'+count+' nargile · '+fmt(revenue)+'</span></div>';
-    html+='<div class="day-detail" id="detail-'+dk+'">';
-    html+=row('Satılan Nargile', count+' adet');
-    html+=row('Ciro', fmt(revenue));
-    html+=row('Benim Payım', fmt(my));
-    html+=row('Cafe Payı', fmt(cafe));
+  zReports.forEach(z=>{
+    html+='<div class="card day-card" data-id="'+z.id+'">';
+    html+='<div class="day-head">';
+    html+='<span class="date">'+displayDate(z.date)+'<span class="time">'+z.time+'</span></span>';
+    html+='<span class="count"><b>'+z.count+' nargile</b>'+fmt(z.revenue)+'</span>';
+    html+='</div>';
+    html+='<div class="day-detail" id="detail-'+z.id+'">';
+    html+=row('Satılan Nargile', z.count+' adet');
+    html+=row('Ciro', fmt(z.revenue));
+    html+=row('Benim Payım', fmt(z.my));
+    html+=row('Cafe Payı', fmt(z.cafe));
     html+='<div class="sale-list">';
-    list.forEach(s=>{
+    z.sales.forEach(s=>{
       html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.adet+' adet — '+fmt(s.ciro)+'</span></div>';
     });
-    html+='</div></div></div>';
+    html+='</div>';
+    html+='<button class="wa-btn" data-share="'+z.id+'"><span class="wa-ico">💬</span> WhatsApp\'ta Paylaş</button>';
+    html+='</div></div>';
   });
   container.innerHTML=html;
 
   document.querySelectorAll('.day-card').forEach(card=>{
-    card.addEventListener('click', ()=>{
-      const dk=card.dataset.date;
-      document.getElementById('detail-'+dk).classList.toggle('open');
+    card.addEventListener('click', (e)=>{
+      if(e.target.closest('.wa-btn')) return;
+      const id=card.dataset.id;
+      document.getElementById('detail-'+id).classList.toggle('open');
+    });
+  });
+  document.querySelectorAll('[data-share]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id=parseInt(btn.dataset.share);
+      const z=zReports.find(r=>r.id===id);
+      if(!z) return;
+      const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.revenue, z.my, z.cafe, z.sales);
+      shareWhatsapp(text);
     });
   });
 }
 
 /* ---- BAŞLANGIÇ ---- */
-renderToday();
+refreshPriceUI();
+renderOpen();
 </script>
 </body>
 </html>
