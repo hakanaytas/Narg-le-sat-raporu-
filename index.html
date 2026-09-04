@@ -367,6 +367,19 @@
     </div>
 
     <div class="card">
+      <h2>Lüle Fiyatı</h2>
+      <div class="price-row">
+        <div class="price-current" id="lulePriceCurrent">150 TL</div>
+        <button class="price-edit-btn" id="luleEditBtn">Fiyatı Değiştir</button>
+      </div>
+      <div class="price-form" id="luleForm">
+        <input type="number" id="luleInput" min="1" step="1" placeholder="Yeni fiyat (TL)">
+        <button id="luleSaveBtn">Kaydet</button>
+      </div>
+      <div class="price-hint" id="luleHint"></div>
+    </div>
+
+    <div class="card">
       <h2>Satış Yap</h2>
       <div class="qty-row">
         <button class="qty-btn" id="qtyMinus">−</button>
@@ -374,6 +387,7 @@
         <button class="qty-btn" id="qtyPlus">+</button>
       </div>
       <button class="sell-btn" id="sellBtn">NARGİLE SAT</button>
+      <button class="sell-btn" id="luleSellBtn" style="margin-top:10px; background:linear-gradient(180deg,var(--cafe),#3b7bc4); color:#031224; box-shadow:0 10px 22px -10px rgba(95,168,232,.55);">LÜLE SAT</button>
       <div class="last-sale" id="lastSale">Henüz satış yapılmadı.</div>
     </div>
 
@@ -384,11 +398,15 @@
           <div class="label">Nargile Adedi</div>
           <div class="value" id="todayCount">0</div>
         </div>
+        <div class="stat-box stat-cafe">
+          <div class="label">Lüle Adedi</div>
+          <div class="value" id="todayLule">0</div>
+        </div>
         <div class="stat-box stat-amber">
           <div class="label">Toplam Ciro</div>
           <div class="value" id="todayRevenue">0 TL</div>
         </div>
-        <div class="stat-box stat-my" style="grid-column:1 / -1;">
+        <div class="stat-box stat-my">
           <div class="label">Benim Payım (%60)</div>
           <div class="value" id="todayMy">0 TL</div>
         </div>
@@ -415,6 +433,7 @@
 const STORAGE_SALES="nargile_open_sales_v2";
 const STORAGE_Z="nargile_z_reports_v2";
 const STORAGE_PRICE="nargile_price_v2";
+const STORAGE_LULE_PRICE="nargile_lule_price_v2";
 const MY_RATE=0.6, CAFE_RATE=0.4;
 const WA_NUMBER="905363320789"; // 0536 332 07 89
 
@@ -424,17 +443,18 @@ function loadJSON(key, fallback){
 }
 function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
-function loadPrice(){
-  const p=parseFloat(localStorage.getItem(STORAGE_PRICE));
-  return (!isNaN(p) && p>0) ? p : 290;
+function loadPrice(key, def){
+  const p=parseFloat(localStorage.getItem(key));
+  return (!isNaN(p) && p>0) ? p : def;
 }
-function savePrice(p){ localStorage.setItem(STORAGE_PRICE, p); }
+function savePrice(key, p){ localStorage.setItem(key, p); }
 
 let openSales = loadJSON(STORAGE_SALES, []);
 let zReports = loadJSON(STORAGE_Z, []);
-let PRICE = loadPrice();
+let PRICE = loadPrice(STORAGE_PRICE, 290);
+let LULE_PRICE = loadPrice(STORAGE_LULE_PRICE, 150);
 let MY_SHARE = Math.round(PRICE*MY_RATE);
-let CAFE_SHARE = PRICE - MY_SHARE;
+let LULE_MY_SHARE = Math.round(LULE_PRICE*MY_RATE);
 let qty = 1;
 
 function pad(n){ return n.toString().padStart(2,'0'); }
@@ -460,6 +480,9 @@ function refreshPriceUI(){
   document.getElementById('priceCurrent').textContent = fmt(PRICE);
   document.getElementById('priceHint').textContent =
     'Bu fiyata göre benim payım (%60): '+fmt(MY_SHARE);
+  document.getElementById('lulePriceCurrent').textContent = fmt(LULE_PRICE);
+  document.getElementById('luleHint').textContent =
+    'Bu fiyata göre benim payım (%60): '+fmt(LULE_MY_SHARE);
 }
 document.getElementById('priceEditBtn').addEventListener('click', ()=>{
   const form=document.getElementById('priceForm');
@@ -472,10 +495,24 @@ document.getElementById('priceSaveBtn').addEventListener('click', ()=>{
   if(isNaN(val) || val<=0){ alert('Lütfen geçerli bir fiyat girin.'); return; }
   PRICE=val;
   MY_SHARE=Math.round(PRICE*MY_RATE);
-  CAFE_SHARE=PRICE-MY_SHARE;
-  savePrice(PRICE);
+  savePrice(STORAGE_PRICE, PRICE);
   refreshPriceUI();
   document.getElementById('priceForm').classList.remove('open');
+});
+document.getElementById('luleEditBtn').addEventListener('click', ()=>{
+  const form=document.getElementById('luleForm');
+  form.classList.toggle('open');
+  document.getElementById('luleInput').value=LULE_PRICE;
+  if(form.classList.contains('open')) document.getElementById('luleInput').focus();
+});
+document.getElementById('luleSaveBtn').addEventListener('click', ()=>{
+  const val=parseFloat(document.getElementById('luleInput').value);
+  if(isNaN(val) || val<=0){ alert('Lütfen geçerli bir fiyat girin.'); return; }
+  LULE_PRICE=val;
+  LULE_MY_SHARE=Math.round(LULE_PRICE*MY_RATE);
+  savePrice(STORAGE_LULE_PRICE, LULE_PRICE);
+  refreshPriceUI();
+  document.getElementById('luleForm').classList.remove('open');
 });
 
 /* ---- TAB NAVİGASYON ---- */
@@ -500,42 +537,51 @@ document.getElementById('qtyMinus').addEventListener('click', ()=>{
 });
 
 /* ---- SATIŞ ---- */
-document.getElementById('sellBtn').addEventListener('click', ()=>{
+function sell(tur, fiyat, benimPay){
   const record={
+    tur: tur,
     date: nowDate(),
     time: nowTime(),
     adet: qty,
-    ciro: qty*PRICE,
-    benim: qty*MY_SHARE,
-    cafe: qty*CAFE_SHARE
+    ciro: qty*fiyat,
+    benim: qty*benimPay
   };
   openSales.push(record);
   saveJSON(STORAGE_SALES, openSales);
 
   document.getElementById('lastSale').innerHTML =
-    'Son satış: <b>'+record.time+'</b> — '+record.adet+' adet — '+
+    'Son satış: <b>'+record.time+'</b> — '+tur+' × '+record.adet+' — '+
     'Ciro: <b>'+fmt(record.ciro)+'</b> · Benim payım: <b>'+fmt(record.benim)+'</b>';
 
   qty=1;
   document.getElementById('qtyNum').textContent=qty;
   renderOpen();
+}
+document.getElementById('sellBtn').addEventListener('click', ()=>{
+  sell('Nargile', PRICE, MY_SHARE);
+});
+document.getElementById('luleSellBtn').addEventListener('click', ()=>{
+  sell('Lüle', LULE_PRICE, LULE_MY_SHARE);
 });
 
 /* ---- AÇIK VARDİYA İSTATİSTİĞİ ---- */
 function renderOpen(){
-  const count=openSales.reduce((a,s)=>a+s.adet,0);
+  const count=openSales.filter(s=>s.tur==='Nargile').reduce((a,s)=>a+s.adet,0);
+  const luleCount=openSales.filter(s=>s.tur==='Lüle').reduce((a,s)=>a+s.adet,0);
   const revenue=openSales.reduce((a,s)=>a+s.ciro,0);
   const my=openSales.reduce((a,s)=>a+s.benim,0);
   document.getElementById('todayCount').textContent=count;
+  document.getElementById('todayLule').textContent=luleCount;
   document.getElementById('todayRevenue').textContent=fmt(revenue);
   document.getElementById('todayMy').textContent=fmt(my);
 }
 
 /* ---- WHATSAPP METNİ ---- */
-function buildWaText(title, dateLabel, timeLabel, count, revenue){
+function buildWaText(title, dateLabel, timeLabel, count, luleCount, revenue){
   let t = '🪔 *'+title+'*\n';
   t += '📅 '+dateLabel+' · 🕒 '+timeLabel+'\n\n';
   t += '• Kaç Nargile Gitti: '+count+' adet\n';
+  if(luleCount>0) t += '• Kaç Lüle Gitti: '+luleCount+' adet\n';
   t += '• Ciro: '+fmt(revenue)+'\n';
   return t;
 }
@@ -551,10 +597,10 @@ document.getElementById('zBtn').addEventListener('click', ()=>{
       '<div class="card"><div class="empty">Kapatılacak açık satış yok. Önce nargile sat.</div></div>';
     return;
   }
-  const count=openSales.reduce((a,s)=>a+s.adet,0);
+  const count=openSales.filter(s=>s.tur==='Nargile').reduce((a,s)=>a+s.adet,0);
+  const luleCount=openSales.filter(s=>s.tur==='Lüle').reduce((a,s)=>a+s.adet,0);
   const revenue=openSales.reduce((a,s)=>a+s.ciro,0);
   const my=openSales.reduce((a,s)=>a+s.benim,0);
-  const cafe=openSales.reduce((a,s)=>a+s.cafe,0);
   const closedDate=nowDate();
   const closedTime=nowTime();
 
@@ -562,7 +608,7 @@ document.getElementById('zBtn').addEventListener('click', ()=>{
     id: Date.now(),
     date: closedDate,
     time: closedTime,
-    count, revenue, my, cafe,
+    count, luleCount, revenue, my,
     sales: openSales
   };
   zReports.unshift(zReport);
@@ -581,21 +627,23 @@ function renderZResult(z){
   let html='<div class="card">';
   html+='<h2>Z Raporu — '+displayDate(z.date)+' '+z.time+'</h2>';
   html+=row('Toplam Nargile', z.count+' adet');
+  if(z.luleCount>0) html+=row('Toplam Lüle', z.luleCount+' adet');
   html+=row('Toplam Ciro', fmt(z.revenue));
   html+=row('Benim Payım (%60)', fmt(z.my));
   html+='</div>';
 
   html+='<div class="card"><h2>Saat Saat Satışlar</h2><div class="sale-list">';
   z.sales.forEach(s=>{
-    html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.adet+' adet — '+fmt(s.ciro)+'</span></div>';
+    html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.tur+' × '+s.adet+' — Benim payım: '+fmt(s.benim)+'</span></div>';
   });
+  html+='<div class="sale-item" style="margin-top:4px; padding-top:12px; border-top:2px solid var(--border);"><span class="t" style="color:var(--my);">Toplam Kazancım</span><span style="color:var(--my); font-weight:800; font-size:15px;">'+fmt(z.my)+'</span></div>';
   html+='</div>';
   html+='<button class="wa-btn" id="waZBtn"><span class="wa-ico">💬</span> WhatsApp\'ta Paylaş</button>';
   html+='</div>';
 
   document.getElementById('zResult').innerHTML=html;
   document.getElementById('waZBtn').addEventListener('click', ()=>{
-    const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.revenue);
+    const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.luleCount, z.revenue);
     shareWhatsapp(text);
   });
 }
@@ -617,12 +665,14 @@ function renderGecmis(){
     html+='</div>';
     html+='<div class="day-detail" id="detail-'+z.id+'">';
     html+=row('Satılan Nargile', z.count+' adet');
+    if(z.luleCount>0) html+=row('Satılan Lüle', z.luleCount+' adet');
     html+=row('Ciro', fmt(z.revenue));
     html+=row('Benim Payım (%60)', fmt(z.my));
     html+='<div class="sale-list">';
     z.sales.forEach(s=>{
-      html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.adet+' adet — '+fmt(s.ciro)+'</span></div>';
+      html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.tur+' × '+s.adet+' — Benim payım: '+fmt(s.benim)+'</span></div>';
     });
+    html+='<div class="sale-item" style="margin-top:4px; padding-top:12px; border-top:2px solid var(--border);"><span class="t" style="color:var(--my);">Toplam Kazancım</span><span style="color:var(--my); font-weight:800; font-size:15px;">'+fmt(z.my)+'</span></div>';
     html+='</div>';
     html+='<button class="wa-btn" data-share="'+z.id+'"><span class="wa-ico">💬</span> WhatsApp\'ta Paylaş</button>';
     html+='</div></div>';
@@ -642,7 +692,7 @@ function renderGecmis(){
       const id=parseInt(btn.dataset.share);
       const z=zReports.find(r=>r.id===id);
       if(!z) return;
-      const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.revenue);
+      const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.luleCount, z.revenue);
       shareWhatsapp(text);
     });
   });
