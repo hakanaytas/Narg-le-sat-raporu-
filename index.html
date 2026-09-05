@@ -2,807 +2,675 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Nargile Kasa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#08131A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Adisyon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#150d08;
-    --bg-2:#0a0603;
-    --card:rgba(255,255,255,0.045);
-    --card-solid:#1c130c;
-    --card-soft:#241a10;
-    --border:rgba(255,255,255,0.09);
-    --text:#f6ede1;
-    --sub:#a9998a;
-    --amber:#eb9a3f;
-    --amber-2:#c9761f;
-    --my:#3ecf8e;
-    --cafe:#5fa8e8;
-    --danger:#f1636b;
-    --radius-lg:22px;
-    --radius-md:16px;
-    --radius-sm:12px;
+    --ink:#08131A;
+    --surface:#0F2029;
+    --surface-2:#152C36;
+    --line:rgba(255,255,255,.09);
+    --line-2:rgba(255,255,255,.05);
+    --text:#E9F3F1;
+    --dim:#7E979F;
+    --jade:#3FD3B0;
+    --jade-dark:#1E9C81;
+    --coral:#F0A184;
+    --coral-dark:#C4674A;
+    --danger:#EC6A6A;
+    --r-lg:20px;
+    --r-md:14px;
+    --r-sm:10px;
   }
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{
+    height:100%;
+    margin:0;
+    overflow:hidden;
+    overscroll-behavior:none;
+  }
   body{
-    margin:0;
-    min-height:100vh;
     background:
-      radial-gradient(1200px 600px at 50% -10%, rgba(235,154,63,0.14), transparent 60%),
-      linear-gradient(180deg,var(--bg-1),var(--bg-2) 60%);
+      radial-gradient(900px 420px at 50% -12%, rgba(63,211,176,.16), transparent 62%),
+      var(--ink);
     color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:15px;
+    -webkit-font-smoothing:antialiased;
   }
+  button,input{font-family:inherit;color:inherit;}
+  button{cursor:pointer;border:none;background:none;}
+  :focus-visible{outline:2px solid var(--jade);outline-offset:2px;}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
+
+  /* ---------- ÇATI ---------- */
   .app{
-    max-width:480px;
+    height:100dvh;
+    max-width:520px;
     margin:0 auto;
-    min-height:100vh;
-    padding-bottom:32px;
-  }
-
-  /* HEADER */
-  header{
-    padding:14px 16px 10px;
-    text-align:center;
-  }
-  .brand{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    margin-bottom:2px;
-  }
-  .brand .icon{
-    font-size:22px;
-    filter:drop-shadow(0 2px 6px rgba(235,154,63,.5));
-  }
-  header h1{
-    font-size:17px;
-    margin:0;
-    font-weight:800;
-    letter-spacing:.01em;
-  }
-  header .tagline{
-    font-size:11px;
-    color:var(--sub);
-    margin:2px 0 10px;
-  }
-
-  .tabs{
-    display:flex;
-    gap:4px;
-    background:var(--card-solid);
-    padding:4px;
-    border-radius:14px;
-    border:1px solid var(--border);
-  }
-  .tab-btn{
-    flex:1;
-    padding:9px 4px;
-    border:none;
-    border-radius:10px;
-    background:transparent;
-    color:var(--sub);
-    font-size:12.5px;
-    font-weight:700;
-    cursor:pointer;
-    transition:background .15s, color .15s;
-  }
-  .tab-btn.active{
-    background:linear-gradient(180deg,var(--amber),var(--amber-2));
-    color:#241304;
-  }
-
-  main{padding:12px;}
-  .hidden{display:none;}
-
-  /* CARDS */
-  .card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius-lg);
-    padding:14px;
-    margin-bottom:10px;
-  }
-  .card h2{
-    font-size:11.5px;
-    margin:0 0 9px;
-    color:var(--sub);
-    font-weight:800;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-  }
-
-  /* FİYAT — iki sütun */
-  .price-cols{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto 1fr auto;
+    padding:calc(env(safe-area-inset-top) + 8px) 14px calc(env(safe-area-inset-bottom) + 8px);
     gap:10px;
   }
-  .price-col{
-    background:var(--card-soft);
-    border-radius:var(--radius-md);
-    padding:10px;
-  }
-  .price-col .plabel{
-    font-size:10.5px;
-    color:var(--sub);
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    margin-bottom:4px;
-  }
-  .price-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:6px;
-  }
-  .price-current{font-size:19px;font-weight:800; color:var(--amber);}
-  .price-edit-btn{
-    padding:7px 10px;
-    border:1px solid var(--border);
-    background:var(--card);
-    color:var(--text);
-    border-radius:var(--radius-sm);
-    font-size:11px;
-    font-weight:700;
-    cursor:pointer;
-    white-space:nowrap;
-  }
-  .price-form{
-    display:none;
-    margin-top:8px;
-    gap:6px;
-  }
-  .price-form.open{display:flex;}
-  .price-form input{
-    flex:1;
-    min-width:0;
-    padding:9px 10px;
-    border-radius:var(--radius-sm);
-    border:1px solid var(--border);
-    background:var(--bg-2);
-    color:var(--text);
-    font-size:15px;
-  }
-  .price-form button{
-    padding:9px 12px;
-    border:none;
-    border-radius:var(--radius-sm);
-    background:var(--my);
-    color:#04220f;
-    font-weight:800;
-    cursor:pointer;
-    flex-shrink:0;
-  }
-  .price-hint{
-    font-size:10.5px;
-    color:var(--sub);
-    margin-top:6px;
-    line-height:1.4;
-  }
 
-  /* SATIŞ */
-  .qty-row{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    margin-bottom:12px;
-  }
-  .qty-btn{
-    width:44px;height:44px;
-    border-radius:13px;
-    border:1px solid var(--border);
-    background:var(--card-soft);
-    color:var(--amber);
-    font-size:22px;
-    font-weight:800;
-    cursor:pointer;
-  }
-  .qty-num{
-    font-size:26px;
-    font-weight:800;
-    min-width:38px;
-    text-align:center;
-  }
-  .sell-btn{
-    width:100%;
-    padding:15px;
-    font-size:16.5px;
-    font-weight:800;
-    border:none;
-    border-radius:var(--radius-md);
-    background:linear-gradient(180deg,var(--amber),var(--amber-2));
-    color:#241304;
-    cursor:pointer;
-    letter-spacing:.02em;
-    box-shadow:0 8px 18px -8px rgba(235,154,63,.55);
-  }
-  .sell-btn:active{transform:translateY(1px); box-shadow:0 6px 14px -6px rgba(235,154,63,.5);}
-
-  .last-sale{
-    margin-top:10px;
-    font-size:12.5px;
-    color:var(--sub);
-    line-height:1.6;
-    background:var(--card-soft);
-    border-radius:var(--radius-sm);
-    padding:9px 11px;
-  }
-  .last-sale b{color:var(--text);}
-
-  /* SON SATIŞLAR + SİLME */
-  .open-list{margin-top:10px;}
-  .open-item{
+  /* ---------- ÜST ÇUBUK ---------- */
+  .topbar{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:8px;
-    padding:8px 2px;
-    border-bottom:1px solid var(--border);
-    font-size:12.5px;
+    gap:10px;
+    padding:0 2px;
   }
-  .open-item:last-child{border-bottom:none;}
-  .open-item .oi-info{color:var(--sub);}
-  .open-item .oi-info b{color:var(--text);}
-  .open-item .oi-del{
-    flex-shrink:0;
-    width:26px;height:26px;
+  .shift{display:flex;align-items:baseline;gap:8px;min-width:0;}
+  .shift .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--jade);
+    box-shadow:0 0 0 4px rgba(63,211,176,.16);
+    align-self:center;flex:none;
+  }
+  .shift .label{font-size:14px;font-weight:800;letter-spacing:-.01em;}
+  .shift .meta{font-size:12px;color:var(--dim);font-weight:600;white-space:nowrap;}
+  .icon-btn{
+    width:38px;height:38px;flex:none;
+    border-radius:12px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    display:grid;place-items:center;
+    font-size:16px;
+  }
+  .icon-btn:active{background:var(--surface-2);}
+
+  /* ---------- SAYFALAR ---------- */
+  .page{display:none;min-height:0;flex-direction:column;gap:10px;}
+  .page.on{display:flex;}
+
+  /* ---------- KAZANÇ ---------- */
+  .hero{
+    background:linear-gradient(160deg,rgba(63,211,176,.13),rgba(63,211,176,.02) 70%),var(--surface);
+    border:1px solid rgba(63,211,176,.22);
+    border-radius:var(--r-lg);
+    padding:14px 16px 13px;
+    flex:none;
+  }
+  .hero .cap{
+    font-size:12.5px;color:var(--dim);font-weight:700;margin-bottom:2px;
+  }
+  .hero .amount{
+    font-size:clamp(34px,10.5vw,46px);
+    font-weight:800;
+    letter-spacing:-.035em;
+    line-height:1.05;
+    color:var(--jade);
+    transition:transform .18s cubic-bezier(.2,1.4,.4,1);
+  }
+  .hero .amount.bump{transform:scale(1.055);}
+  .hero .sub{
+    margin-top:6px;padding-top:8px;
+    border-top:1px solid var(--line-2);
+    display:flex;gap:16px;
+    font-size:13px;color:var(--dim);font-weight:600;
+  }
+  .hero .sub b{color:var(--text);font-weight:800;}
+
+  /* ---------- ÜRÜN KARTLARI ---------- */
+  .products{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:none;}
+  .prod{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    padding:13px 13px 11px;
+    text-align:left;
+    display:block;width:100%;
+    transition:transform .1s ease,border-color .15s ease;
+  }
+  .prod:active{transform:scale(.975);}
+  .prod.flash{border-color:var(--accent);}
+  .prod .name{font-size:15.5px;font-weight:800;letter-spacing:-.01em;}
+  .prod .price{font-size:12.5px;color:var(--dim);font-weight:600;margin-top:1px;}
+  .prod .share{
+    margin-top:9px;
+    font-size:13px;font-weight:800;
+    color:var(--accent);
+  }
+  .prod .share span{font-weight:600;color:var(--dim);font-size:12px;}
+  .prod .tally{
+    position:absolute;top:11px;right:11px;
+    min-width:30px;height:26px;padding:0 8px;
     border-radius:9px;
-    border:1px solid var(--border);
-    background:transparent;
-    color:var(--danger);
-    font-size:14px;
-    font-weight:800;
-    line-height:1;
-    cursor:pointer;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-size:14px;font-weight:800;
+    display:grid;place-items:center;
   }
-  .undo-btn{
-    width:100%;
-    margin-top:8px;
-    padding:10px;
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    background:transparent;
-    color:var(--sub);
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
-  }
-  .undo-btn:active{background:var(--card-soft);}
-
-  /* İSTATİSTİK */
-  .stats-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-  }
-  .stat-box{
-    background:var(--card-soft);
-    border-radius:var(--radius-md);
-    padding:11px 10px;
-    text-align:center;
-  }
-  .stat-box .label{font-size:10.5px;color:var(--sub);margin-bottom:4px;font-weight:600;}
-  .stat-box .value{font-size:16.5px;font-weight:800;}
-  .stat-my .value{color:var(--my);}
-  .stat-cafe .value{color:var(--cafe);}
-  .stat-amber .value{color:var(--amber);}
-
-  /* Z RAPORU */
-  .z-btn{
-    width:100%;
-    padding:18px;
-    font-size:16.5px;
-    font-weight:800;
-    border:none;
-    border-radius:var(--radius-md);
-    background:linear-gradient(180deg,var(--cafe),#3b7bc4);
-    color:#031224;
-    cursor:pointer;
-    box-shadow:0 10px 22px -10px rgba(95,168,232,.55);
-  }
-  .z-hint{
-    font-size:12px;
-    color:var(--sub);
+  .prod .tally.zero{background:rgba(255,255,255,.05);color:var(--dim);}
+  .prod .add{
     margin-top:10px;
-    text-align:center;
+    height:34px;border-radius:var(--r-sm);
+    background:var(--accent);
+    color:#04211B;
+    font-size:14px;font-weight:800;
+    display:grid;place-items:center;
   }
+  #prodNargile{--accent:var(--jade);--accent-soft:rgba(63,211,176,.14);}
+  #prodLule{--accent:var(--coral);--accent-soft:rgba(240,161,132,.14);}
+  #prodLule .add{color:#2A1006;}
 
-  .report-row{
-    display:flex;
-    justify-content:space-between;
-    padding:9px 0;
-    border-bottom:1px solid var(--border);
-    font-size:14px;
+  /* ---------- ADİSYON LİSTESİ ---------- */
+  .list-wrap{
+    flex:1;min-height:0;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    display:flex;flex-direction:column;
+    overflow:hidden;
   }
-  .report-row:last-child{border-bottom:none;}
-  .report-row .l{color:var(--sub);}
-  .report-row .r{font-weight:800;}
-
-  .pie-wrap{
-    display:flex;
-    align-items:center;
-    gap:22px;
-    justify-content:center;
-    padding:6px 0 2px;
+  .list-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:11px 14px 9px;
+    border-bottom:1px solid var(--line-2);
+    flex:none;
   }
-  .pie{
-    width:118px;height:118px;
-    border-radius:50%;
-    flex-shrink:0;
-    box-shadow: inset 0 0 0 8px var(--bg-2);
+  .list-head .t{font-size:13px;font-weight:800;}
+  .list-head .undo{
+    font-size:12.5px;font-weight:700;color:var(--dim);
+    padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.05);
   }
-  .legend{font-size:13px;line-height:2.1;}
-  .dot{
-    display:inline-block;
-    width:10px;height:10px;
-    border-radius:50%;
-    margin-right:7px;
+  .list{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4px 6px 6px;}
+  .row{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 8px;
+    border-radius:var(--r-sm);
   }
-
-  .sale-list{margin-top:8px;}
-  .sale-item{
-    display:flex;
-    justify-content:space-between;
-    font-size:13px;
-    padding:8px 0;
-    border-bottom:1px solid var(--border);
-    color:var(--sub);
+  .row + .row{box-shadow:inset 0 1px 0 var(--line-2);}
+  .row .time{font-size:12.5px;color:var(--dim);font-weight:700;width:44px;flex:none;}
+  .row .what{flex:1;font-size:13.5px;font-weight:700;min-width:0;}
+  .row .what i{font-style:normal;color:var(--dim);font-weight:600;}
+  .row .gain{font-size:13.5px;font-weight:800;color:var(--jade);}
+  .row.lule .gain{color:var(--coral);}
+  .row .del{
+    width:28px;height:28px;flex:none;border-radius:8px;
+    color:var(--dim);font-size:15px;
+    display:grid;place-items:center;
   }
-  .sale-item:last-child{border-bottom:none;}
-  .sale-item .t{color:var(--text);font-weight:700;}
-
+  .row .del:active{background:rgba(236,106,106,.16);color:var(--danger);}
   .empty{
-    text-align:center;
-    color:var(--sub);
-    font-size:13.5px;
-    padding:22px 0;
+    height:100%;display:grid;place-items:center;
+    color:var(--dim);font-size:13px;font-weight:600;
+    text-align:center;padding:18px;line-height:1.5;
   }
 
-  /* WHATSAPP */
-  .wa-btn{
-    width:100%;
-    margin-top:4px;
+  /* ---------- GÜN SONU ---------- */
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
     padding:14px;
-    border:none;
-    border-radius:var(--radius-md);
-    background:#22c55e;
-    color:#062b12;
-    font-size:14.5px;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
   }
-  .wa-btn .wa-ico{font-size:17px;}
+  .panel h2{
+    margin:0 0 10px;font-size:13.5px;font-weight:800;
+  }
+  .kv{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:14px;}
+  .kv + .kv{border-top:1px solid var(--line-2);}
+  .kv .k{color:var(--dim);font-weight:600;}
+  .kv .v{font-weight:800;}
+  .kv.big .v{font-size:19px;color:var(--jade);letter-spacing:-.02em;}
+  .scroller{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:10px;padding-bottom:2px;}
+  .btn{
+    height:50px;border-radius:var(--r-md);
+    font-size:15px;font-weight:800;letter-spacing:-.01em;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    width:100%;
+  }
+  .btn:active{transform:scale(.985);}
+  .btn.primary{background:var(--jade);color:#04211B;}
+  .btn.wa{background:#25D366;color:#03260F;}
+  .btn.ghost{background:var(--surface-2);color:var(--text);border:1px solid var(--line);}
+  .btn.ghost.warn{color:var(--danger);}
+  .note{font-size:12px;color:var(--dim);line-height:1.5;margin-top:8px;}
 
-  /* GEÇMİŞ */
-  .day-card{cursor:pointer;}
-  .day-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+  /* ---------- GEÇMİŞ ---------- */
+  .day{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-md);
+    padding:12px 13px;
   }
-  .day-head .date{font-weight:800;font-size:14.5px;}
-  .day-head .date .time{color:var(--sub); font-weight:600; font-size:12px; display:block; margin-top:2px;}
-  .day-head .count{font-size:13px;color:var(--sub); text-align:right;}
-  .day-head .count b{color:var(--amber); display:block; font-size:15px;}
-  .day-detail{
-    margin-top:12px;
-    padding-top:12px;
-    border-top:1px solid var(--border);
-    display:none;
+  .day-top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .day-top .d{font-size:14px;font-weight:800;}
+  .day-top .d small{display:block;color:var(--dim);font-size:12px;font-weight:600;margin-top:1px;}
+  .day-top .g{font-size:16px;font-weight:800;color:var(--jade);text-align:right;}
+  .day-top .g small{display:block;color:var(--dim);font-size:12px;font-weight:600;}
+  .day-body{display:none;margin-top:11px;padding-top:10px;border-top:1px solid var(--line-2);}
+  .day-body.open{display:block;}
+  .day-actions{display:flex;gap:8px;margin-top:10px;}
+  .day-actions .btn{height:42px;font-size:13.5px;}
+
+  /* ---------- ALT MENÜ ---------- */
+  nav{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:4px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:4px;
+    flex:none;
   }
-  .day-detail.open{display:block;}
+  nav button{
+    padding:9px 4px 8px;
+    border-radius:12px;
+    color:var(--dim);
+    font-size:12.5px;font-weight:700;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+  }
+  nav button .ic{font-size:15px;line-height:1;}
+  nav button.on{background:var(--surface-2);color:var(--text);}
+  nav button .badge{
+    position:absolute;
+  }
+
+  /* ---------- AYAR PANELİ ---------- */
+  .sheet-bg{
+    position:fixed;inset:0;background:rgba(2,10,14,.72);
+    display:none;align-items:flex-end;justify-content:center;
+    z-index:40;
+  }
+  .sheet-bg.open{display:flex;}
+  .sheet{
+    width:100%;max-width:520px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:22px 22px 0 0;
+    padding:16px 16px calc(env(safe-area-inset-bottom) + 16px);
+    max-height:86dvh;overflow-y:auto;
+  }
+  .sheet h2{margin:0 0 3px;font-size:16px;font-weight:800;}
+  .sheet .sub{font-size:12.5px;color:var(--dim);margin-bottom:14px;}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:12.5px;color:var(--dim);font-weight:700;margin-bottom:5px;}
+  .field input{
+    width:100%;height:46px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:var(--r-md);
+    padding:0 13px;
+    font-size:16px;font-weight:700;
+  }
+  .field .hint{font-size:12px;color:var(--jade);font-weight:700;margin-top:6px;}
+  .sheet-actions{display:flex;gap:9px;margin-top:14px;}
 </style>
 </head>
 <body>
 <div class="app">
-  <header>
-    <div class="brand"><span class="icon">🪔</span><h1>Nargile Kasa</h1></div>
-    <div class="tagline">Satış · Z Raporu · Geçmiş</div>
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="ana">Ana Ekran</button>
-      <button class="tab-btn" data-tab="z">Z Raporu</button>
-      <button class="tab-btn" data-tab="gecmis">Geçmiş</button>
-    </div>
-  </header>
 
-  <!-- ANA EKRAN -->
-  <main id="tab-ana">
-    <div class="card">
-      <h2>Fiyatlar</h2>
-      <div class="price-cols">
-        <div class="price-col">
-          <div class="plabel">Nargile</div>
-          <div class="price-row">
-            <div class="price-current" id="priceCurrent">290 TL</div>
-            <button class="price-edit-btn" id="priceEditBtn">Değiştir</button>
-          </div>
-          <div class="price-form" id="priceForm">
-            <input type="number" id="priceInput" min="1" step="1" placeholder="Yeni fiyat">
-            <button id="priceSaveBtn">Kaydet</button>
-          </div>
-          <div class="price-hint" id="priceHint"></div>
-        </div>
-        <div class="price-col">
-          <div class="plabel">Lüle</div>
-          <div class="price-row">
-            <div class="price-current" id="lulePriceCurrent">150 TL</div>
-            <button class="price-edit-btn" id="luleEditBtn">Değiştir</button>
-          </div>
-          <div class="price-form" id="luleForm">
-            <input type="number" id="luleInput" min="1" step="1" placeholder="Yeni fiyat">
-            <button id="luleSaveBtn">Kaydet</button>
-          </div>
-          <div class="price-hint" id="luleHint"></div>
-        </div>
+  <div class="topbar">
+    <div class="shift">
+      <span class="dot"></span>
+      <span class="label">Vardiya</span>
+      <span class="meta num" id="clock">—</span>
+    </div>
+    <button class="icon-btn" id="btnSettings" aria-label="Fiyat ayarları">⚙</button>
+  </div>
+
+  <!-- ===== SATIŞ ===== -->
+  <section class="page on" id="pageSatis">
+    <div class="hero">
+      <div class="cap">Bu vardiyadaki kazancım</div>
+      <div class="amount num" id="heroGain">0 ₺</div>
+      <div class="sub">
+        <span><b class="num" id="heroNargile">0</b> nargile</span>
+        <span><b class="num" id="heroLule">0</b> lüle</span>
       </div>
     </div>
 
-    <div class="card">
-      <h2>Satış Yap</h2>
-      <div class="qty-row">
-        <button class="qty-btn" id="qtyMinus">−</button>
-        <div class="qty-num" id="qtyNum">1</div>
-        <button class="qty-btn" id="qtyPlus">+</button>
+    <div class="products">
+      <button class="prod" id="prodNargile">
+        <div class="tally num zero" id="tallyNargile">0</div>
+        <div class="name">Nargile</div>
+        <div class="price num" id="priceNargile">290 ₺</div>
+        <div class="share num" id="shareNargile"><span>payım </span>174 ₺</div>
+        <div class="add">+ Ekle</div>
+      </button>
+      <button class="prod" id="prodLule">
+        <div class="tally num zero" id="tallyLule">0</div>
+        <div class="name">Lüle</div>
+        <div class="price num" id="priceLule">150 ₺</div>
+        <div class="share num" id="shareLule"><span>tamamı benim </span>150 ₺</div>
+        <div class="add">+ Ekle</div>
+      </button>
+    </div>
+
+    <div class="list-wrap">
+      <div class="list-head">
+        <span class="t">Adisyon</span>
+        <button class="undo" id="btnUndo">↩ Son kaydı sil</button>
       </div>
-      <button class="sell-btn" id="sellBtn">NARGİLE SAT</button>
-      <button class="sell-btn" id="luleSellBtn" style="margin-top:8px; background:linear-gradient(180deg,var(--cafe),#3b7bc4); color:#031224; box-shadow:0 8px 18px -8px rgba(95,168,232,.55);">LÜLE SAT</button>
-      <button class="undo-btn" id="undoBtn">↩ Son Satışı Geri Al</button>
-      <div class="last-sale" id="lastSale">Henüz satış yapılmadı.</div>
-      <div class="open-list" id="openList"></div>
+      <div class="list" id="list"></div>
     </div>
+  </section>
 
-    <div class="card">
-      <h2>Açık Vardiya (Son Z'den Beri)</h2>
-      <div class="stats-grid">
-        <div class="stat-box stat-amber">
-          <div class="label">Nargile Adedi</div>
-          <div class="value" id="todayCount">0</div>
-        </div>
-        <div class="stat-box stat-cafe">
-          <div class="label">Lüle Adedi</div>
-          <div class="value" id="todayLule">0</div>
-        </div>
-        <div class="stat-box stat-amber">
-          <div class="label">Toplam Ciro</div>
-          <div class="value" id="todayRevenue">0 TL</div>
-        </div>
-        <div class="stat-box stat-my">
-          <div class="label">Benim Payım (%60)</div>
-          <div class="value" id="todayMy">0 TL</div>
-        </div>
+  <!-- ===== GÜN SONU ===== -->
+  <section class="page" id="pageGunSonu">
+    <div class="scroller">
+      <div class="panel">
+        <h2 id="gsTitle">Gün sonu özeti</h2>
+        <div class="kv"><span class="k">Nargile</span><span class="v num" id="gsNargile">0 adet</span></div>
+        <div class="kv"><span class="k">Lüle (tamamı benim)</span><span class="v num" id="gsLule">0 adet</span></div>
+        <div class="kv big"><span class="k">Kazancım</span><span class="v num" id="gsGain">0 ₺</span></div>
+        <div class="note" id="gsNote">Vardiya boş. Satış ekle, sonra gün sonunu kapat.</div>
       </div>
-    </div>
-  </main>
 
-  <!-- Z RAPORU -->
-  <main id="tab-z" class="hidden">
-    <div class="card">
-      <button class="z-btn" id="zBtn">Z RAPORU AL</button>
-      <div class="z-hint">Z raporu alındığında açık vardiya kapanır ve sayaç sıfırlanır. Satışlar silinmez, geçmişe kaydedilir.</div>
+      <button class="btn wa" id="btnWaNow">WhatsApp'a gönder</button>
+      <button class="btn primary" id="btnClose">Günü kapat ve kaydet</button>
+      <div class="note">Günü kapatınca adisyon sıfırlanır, özet Geçmiş'e kaydedilir.</div>
     </div>
-    <div id="zResult"></div>
-  </main>
+  </section>
 
-  <!-- GEÇMİŞ -->
-  <main id="tab-gecmis" class="hidden">
-    <div id="gecmisList"></div>
-  </main>
+  <!-- ===== GEÇMİŞ ===== -->
+  <section class="page" id="pageGecmis">
+    <div class="scroller" id="historyList"></div>
+  </section>
+
+  <nav>
+    <button class="on" data-page="Satis"><span class="ic">🧾</span>Satış</button>
+    <button data-page="GunSonu"><span class="ic">🌙</span>Gün Sonu</button>
+    <button data-page="Gecmis"><span class="ic">📁</span>Geçmiş</button>
+  </nav>
+</div>
+
+<!-- ===== AYAR PANELİ ===== -->
+<div class="sheet-bg" id="sheetBg">
+  <div class="sheet">
+    <h2>Fiyat ve pay</h2>
+    <div class="sub">Nargileden payın orana göre hesaplanır. Lülenin tamamı senin.</div>
+
+    <div class="field">
+      <label for="inNargile">Nargile fiyatı (₺)</label>
+      <input type="number" inputmode="numeric" id="inNargile" min="1" step="1">
+      <div class="hint" id="hintNargile"></div>
+    </div>
+    <div class="field">
+      <label for="inLule">Lüle fiyatı (₺)</label>
+      <input type="number" inputmode="numeric" id="inLule" min="1" step="1">
+      <div class="hint" id="hintLule"></div>
+    </div>
+    <div class="field">
+      <label for="inRate">Nargile kâr oranım (%)</label>
+      <input type="number" inputmode="numeric" id="inRate" min="1" max="100" step="1">
+    </div>
+    <div class="field">
+      <label for="inWa">WhatsApp numarası (ülke kodlu)</label>
+      <input type="tel" inputmode="numeric" id="inWa" placeholder="905XXXXXXXXX">
+    </div>
+
+    <div class="sheet-actions">
+      <button class="btn ghost" id="btnSheetCancel">Vazgeç</button>
+      <button class="btn primary" id="btnSheetSave">Kaydet</button>
+    </div>
+  </div>
 </div>
 
 <script>
-const STORAGE_SALES="nargile_open_sales_v2";
-const STORAGE_Z="nargile_z_reports_v2";
-const STORAGE_PRICE="nargile_price_v2";
-const STORAGE_LULE_PRICE="nargile_lule_price_v2";
-const MY_RATE=0.6, CAFE_RATE=0.4;
-const WA_NUMBER="905363320789"; // 0536 332 07 89
+(function(){
+"use strict";
 
-function loadJSON(key, fallback){
-  try{ const v=JSON.parse(localStorage.getItem(key)); return v!==null ? v : fallback; }
-  catch(e){ return fallback; }
-}
-function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+/* ---------- kalıcı kayıt (localStorage yoksa bellekte tutar) ---------- */
+var mem={};
+var store={
+  get:function(k){ try{ var v=localStorage.getItem(k); return v===null?(k in mem?mem[k]:null):v; }catch(e){ return (k in mem)?mem[k]:null; } },
+  set:function(k,v){ mem[k]=v; try{ localStorage.setItem(k,v); }catch(e){} }
+};
+var K={sales:"adisyon_acik_v3",days:"adisyon_gunler_v3",cfg:"adisyon_ayar_v3"};
 
-function loadPrice(key, def){
-  const p=parseFloat(localStorage.getItem(key));
-  return (!isNaN(p) && p>0) ? p : def;
-}
-function savePrice(key, p){ localStorage.setItem(key, p); }
+var cfg=Object.assign({nargile:290,lule:150,rate:60,wa:"905363320789"},readJSON(K.cfg,{}));
+var sales=readJSON(K.sales,[]);
+var days=readJSON(K.days,[]);
 
-let openSales = loadJSON(STORAGE_SALES, []);
-let zReports = loadJSON(STORAGE_Z, []);
-let PRICE = loadPrice(STORAGE_PRICE, 290);
-let LULE_PRICE = loadPrice(STORAGE_LULE_PRICE, 150);
-let MY_SHARE = Math.round(PRICE*MY_RATE);
-let LULE_MY_SHARE = Math.round(LULE_PRICE*MY_RATE);
-let qty = 1;
+function readJSON(k,f){ try{ var v=JSON.parse(store.get(k)); return v===null||v===undefined?f:v; }catch(e){ return f; } }
+function writeJSON(k,v){ store.set(k,JSON.stringify(v)); }
 
-function pad(n){ return n.toString().padStart(2,'0'); }
-function nowDate(){
-  const d=new Date();
-  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-}
-function nowTime(){
-  const d=new Date();
-  return pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
-}
-function fmt(n){ return Math.round(n).toLocaleString('tr-TR')+' TL'; }
-function displayDate(dateStr){
-  const [y,m,d]=dateStr.split('-');
-  return d+'.'+m+'.'+y;
-}
-function row(label,value){
-  return '<div class="report-row"><span class="l">'+label+'</span><span class="r">'+value+'</span></div>';
-}
-
-/* ---- FİYAT ---- */
-function refreshPriceUI(){
-  document.getElementById('priceCurrent').textContent = fmt(PRICE);
-  document.getElementById('priceHint').textContent =
-    'Bu fiyata göre benim payım (%60): '+fmt(MY_SHARE);
-  document.getElementById('lulePriceCurrent').textContent = fmt(LULE_PRICE);
-  document.getElementById('luleHint').textContent =
-    'Bu fiyata göre benim payım (%60): '+fmt(LULE_MY_SHARE);
-}
-document.getElementById('priceEditBtn').addEventListener('click', ()=>{
-  const form=document.getElementById('priceForm');
-  form.classList.toggle('open');
-  document.getElementById('priceInput').value=PRICE;
-  if(form.classList.contains('open')) document.getElementById('priceInput').focus();
-});
-document.getElementById('priceSaveBtn').addEventListener('click', ()=>{
-  const val=parseFloat(document.getElementById('priceInput').value);
-  if(isNaN(val) || val<=0){ alert('Lütfen geçerli bir fiyat girin.'); return; }
-  PRICE=val;
-  MY_SHARE=Math.round(PRICE*MY_RATE);
-  savePrice(STORAGE_PRICE, PRICE);
-  refreshPriceUI();
-  document.getElementById('priceForm').classList.remove('open');
-});
-document.getElementById('luleEditBtn').addEventListener('click', ()=>{
-  const form=document.getElementById('luleForm');
-  form.classList.toggle('open');
-  document.getElementById('luleInput').value=LULE_PRICE;
-  if(form.classList.contains('open')) document.getElementById('luleInput').focus();
-});
-document.getElementById('luleSaveBtn').addEventListener('click', ()=>{
-  const val=parseFloat(document.getElementById('luleInput').value);
-  if(isNaN(val) || val<=0){ alert('Lütfen geçerli bir fiyat girin.'); return; }
-  LULE_PRICE=val;
-  LULE_MY_SHARE=Math.round(LULE_PRICE*MY_RATE);
-  savePrice(STORAGE_LULE_PRICE, LULE_PRICE);
-  refreshPriceUI();
-  document.getElementById('luleForm').classList.remove('open');
-});
-
-/* ---- TAB NAVİGASYON ---- */
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('main').forEach(m=>m.classList.add('hidden'));
-    document.getElementById('tab-'+btn.dataset.tab).classList.remove('hidden');
-    if(btn.dataset.tab==='gecmis') renderGecmis();
-    if(btn.dataset.tab==='z') document.getElementById('zResult').innerHTML='';
-  });
-});
-
-/* ---- ADET SEÇİMİ ---- */
-document.getElementById('qtyPlus').addEventListener('click', ()=>{
-  qty++; document.getElementById('qtyNum').textContent=qty;
-});
-document.getElementById('qtyMinus').addEventListener('click', ()=>{
-  if(qty>1) qty--;
-  document.getElementById('qtyNum').textContent=qty;
-});
-
-/* ---- SATIŞ ---- */
-function sell(tur, fiyat, benimPay){
-  const record={
-    tur: tur,
-    date: nowDate(),
-    time: nowTime(),
-    adet: qty,
-    ciro: qty*fiyat,
-    benim: qty*benimPay
+/* ---------- yardımcılar ---------- */
+function pad(n){ return (n<10?"0":"")+n; }
+function money(n){ return Math.round(n).toLocaleString("tr-TR")+" ₺"; }
+function payOf(price,tur){ return tur==="Lüle" ? Math.round(price) : Math.round(price*cfg.rate/100); }
+function nowParts(){
+  var d=new Date();
+  return {
+    date: pad(d.getDate())+"."+pad(d.getMonth()+1)+"."+d.getFullYear(),
+    time: pad(d.getHours())+":"+pad(d.getMinutes()),
+    stamp: d.getTime()
   };
-  openSales.push(record);
-  saveJSON(STORAGE_SALES, openSales);
-
-  document.getElementById('lastSale').innerHTML =
-    'Son satış: <b>'+record.time+'</b> — '+tur+' × '+record.adet+' — '+
-    'Ciro: <b>'+fmt(record.ciro)+'</b> · Benim payım: <b>'+fmt(record.benim)+'</b>';
-
-  qty=1;
-  document.getElementById('qtyNum').textContent=qty;
-  renderOpen();
 }
-document.getElementById('sellBtn').addEventListener('click', ()=>{
-  sell('Nargile', PRICE, MY_SHARE);
-});
-document.getElementById('luleSellBtn').addEventListener('click', ()=>{
-  sell('Lüle', LULE_PRICE, LULE_MY_SHARE);
-});
+function $(id){ return document.getElementById(id); }
+function buzz(ms){ if(navigator.vibrate) try{ navigator.vibrate(ms); }catch(e){} }
 
-/* ---- AÇIK VARDİYA İSTATİSTİĞİ ---- */
-function renderOpen(){
-  const count=openSales.filter(s=>s.tur==='Nargile').reduce((a,s)=>a+s.adet,0);
-  const luleCount=openSales.filter(s=>s.tur==='Lüle').reduce((a,s)=>a+s.adet,0);
-  const revenue=openSales.reduce((a,s)=>a+s.ciro,0);
-  const my=openSales.reduce((a,s)=>a+s.benim,0);
-  document.getElementById('todayCount').textContent=count;
-  document.getElementById('todayLule').textContent=luleCount;
-  document.getElementById('todayRevenue').textContent=fmt(revenue);
-  document.getElementById('todayMy').textContent=fmt(my);
-  renderOpenList();
-}
-
-/* ---- YANLIŞ GİRİLEN SATIŞLARI SİLME ---- */
-function renderOpenList(){
-  const wrap=document.getElementById('openList');
-  if(openSales.length===0){ wrap.innerHTML=''; return; }
-  let html='';
-  // en yeni en üstte
-  for(let i=openSales.length-1; i>=0; i--){
-    const s=openSales[i];
-    html+='<div class="open-item"><span class="oi-info">'+s.time+' · <b>'+s.tur+' × '+s.adet+'</b> — '+fmt(s.ciro)+'</span>'+
-      '<button class="oi-del" data-idx="'+i+'" title="Bu satışı sil">✕</button></div>';
-  }
-  wrap.innerHTML=html;
-  wrap.querySelectorAll('.oi-del').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const idx=parseInt(btn.dataset.idx);
-      if(!confirm('Bu satışı silmek istediğine emin misin?')) return;
-      openSales.splice(idx,1);
-      saveJSON(STORAGE_SALES, openSales);
-      document.getElementById('lastSale').textContent = 'Satış silindi.';
-      renderOpen();
-    });
+function totals(list){
+  var t={nargile:0,lule:0,gain:0};
+  list.forEach(function(s){
+    if(s.tur==="Lüle") t.lule++; else t.nargile++;
+    t.gain+=s.pay;
   });
-}
-document.getElementById('undoBtn').addEventListener('click', ()=>{
-  if(openSales.length===0) return;
-  if(!confirm('Son satışı geri almak istediğine emin misin?')) return;
-  openSales.pop();
-  saveJSON(STORAGE_SALES, openSales);
-  document.getElementById('lastSale').textContent = 'Son satış geri alındı.';
-  renderOpen();
-});
-
-/* ---- WHATSAPP METNİ ---- */
-function buildWaText(title, dateLabel, timeLabel, count, luleCount, revenue){
-  let t = '🪔 *'+title+'*\n';
-  t += '📅 '+dateLabel+' · 🕒 '+timeLabel+'\n\n';
-  t += '• Kaç Nargile Gitti: '+count+' adet\n';
-  if(luleCount>0) t += '• Kaç Lüle Gitti: '+luleCount+' adet\n';
-  t += '• Ciro: '+fmt(revenue)+'\n';
   return t;
 }
-function shareWhatsapp(text){
-  const url = 'https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(text);
-  window.open(url, '_blank');
+
+/* ---------- saat ---------- */
+function tickClock(){
+  var p=nowParts();
+  $("clock").textContent=p.date+"  "+p.time;
+}
+tickClock(); setInterval(tickClock,20000);
+
+/* ---------- fiyat kartları ---------- */
+function renderPrices(){
+  $("priceNargile").textContent=money(cfg.nargile);
+  $("priceLule").textContent=money(cfg.lule);
+  $("shareNargile").innerHTML='<span>payım %'+cfg.rate+' </span>'+money(payOf(cfg.nargile,"Nargile"));
+  $("shareLule").innerHTML='<span>tamamı benim </span>'+money(payOf(cfg.lule,"Lüle"));
 }
 
-/* ---- Z RAPORU AL ---- */
-document.getElementById('zBtn').addEventListener('click', ()=>{
-  if(openSales.length===0){
-    document.getElementById('zResult').innerHTML =
-      '<div class="card"><div class="empty">Kapatılacak açık satış yok. Önce nargile sat.</div></div>';
-    return;
+/* ---------- ana ekran ---------- */
+function render(){
+  var t=totals(sales);
+  $("heroGain").textContent=money(t.gain);
+  $("heroNargile").textContent=t.nargile;
+  $("heroLule").textContent=t.lule;
+
+  var tn=$("tallyNargile"), tl=$("tallyLule");
+  tn.textContent=t.nargile; tn.classList.toggle("zero",t.nargile===0);
+  tl.textContent=t.lule;    tl.classList.toggle("zero",t.lule===0);
+
+  var box=$("list");
+  if(!sales.length){
+    box.innerHTML='<div class="empty">Adisyon boş.<br>Nargile ya da lüle kartına dokun.</div>';
+  }else{
+    var html="";
+    for(var i=sales.length-1;i>=0;i--){
+      var s=sales[i];
+      html+='<div class="row'+(s.tur==="Lüle"?" lule":"")+'">'+
+        '<span class="time num">'+s.time+'</span>'+
+        '<span class="what">'+s.tur+' <i>'+money(s.fiyat)+'</i></span>'+
+        '<span class="gain num">+'+money(s.pay)+'</span>'+
+        '<button class="del" data-i="'+i+'" aria-label="Sil">✕</button>'+
+      '</div>';
+    }
+    box.innerHTML=html;
+    Array.prototype.forEach.call(box.querySelectorAll(".del"),function(b){
+      b.addEventListener("click",function(){
+        sales.splice(parseInt(b.dataset.i,10),1);
+        writeJSON(K.sales,sales);
+        render();
+      });
+    });
   }
-  const count=openSales.filter(s=>s.tur==='Nargile').reduce((a,s)=>a+s.adet,0);
-  const luleCount=openSales.filter(s=>s.tur==='Lüle').reduce((a,s)=>a+s.adet,0);
-  const revenue=openSales.reduce((a,s)=>a+s.ciro,0);
-  const my=openSales.reduce((a,s)=>a+s.benim,0);
-  const closedDate=nowDate();
-  const closedTime=nowTime();
+  renderGunSonu();
+}
 
-  const zReport={
-    id: Date.now(),
-    date: closedDate,
-    time: closedTime,
-    count, luleCount, revenue, my,
-    sales: openSales
-  };
-  zReports.unshift(zReport);
-  saveJSON(STORAGE_Z, zReports);
+function addSale(tur,fiyat){
+  var p=nowParts();
+  sales.push({tur:tur,fiyat:fiyat,pay:payOf(fiyat,tur),time:p.time,date:p.date,stamp:p.stamp});
+  writeJSON(K.sales,sales);
+  render();
+  buzz(12);
+  var h=$("heroGain");
+  h.classList.add("bump");
+  setTimeout(function(){ h.classList.remove("bump"); },180);
+}
 
-  // Vardiyayı kapat: açık satışları sıfırla, geçmiş silinmiyor.
-  openSales = [];
-  saveJSON(STORAGE_SALES, openSales);
-  renderOpen();
-  document.getElementById('lastSale').textContent = 'Z raporu alındı, yeni vardiya başladı.';
-
-  renderZResult(zReport);
+$("prodNargile").addEventListener("click",function(){ addSale("Nargile",cfg.nargile); });
+$("prodLule").addEventListener("click",function(){ addSale("Lüle",cfg.lule); });
+$("btnUndo").addEventListener("click",function(){
+  if(!sales.length) return;
+  sales.pop(); writeJSON(K.sales,sales); render(); buzz(8);
 });
 
-function renderZResult(z){
-  let html='<div class="card">';
-  html+='<h2>Z Raporu — '+displayDate(z.date)+' '+z.time+'</h2>';
-  html+=row('Toplam Nargile', z.count+' adet');
-  if(z.luleCount>0) html+=row('Toplam Lüle', z.luleCount+' adet');
-  html+=row('Toplam Ciro', fmt(z.revenue));
-  html+=row('Benim Payım (%60)', fmt(z.my));
-  html+='</div>';
-
-  html+='<div class="card"><h2>Saat Saat Satışlar</h2><div class="sale-list">';
-  z.sales.forEach(s=>{
-    html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.tur+' × '+s.adet+' — Benim payım: '+fmt(s.benim)+'</span></div>';
-  });
-  html+='<div class="sale-item" style="margin-top:4px; padding-top:12px; border-top:2px solid var(--border);"><span class="t" style="color:var(--my);">Toplam Kazancım</span><span style="color:var(--my); font-weight:800; font-size:15px;">'+fmt(z.my)+'</span></div>';
-  html+='</div>';
-  html+='<button class="wa-btn" id="waZBtn"><span class="wa-ico">💬</span> WhatsApp\'ta Paylaş</button>';
-  html+='</div>';
-
-  document.getElementById('zResult').innerHTML=html;
-  document.getElementById('waZBtn').addEventListener('click', ()=>{
-    const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.luleCount, z.revenue);
-    shareWhatsapp(text);
-  });
+/* ---------- gün sonu ---------- */
+function renderGunSonu(){
+  var t=totals(sales), p=nowParts();
+  $("gsTitle").textContent="Gün sonu · "+p.date;
+  $("gsNargile").textContent=t.nargile+" adet";
+  $("gsLule").textContent=t.lule+" adet";
+  $("gsGain").textContent=money(t.gain);
+  $("gsNote").textContent = sales.length
+    ? "Adisyondaki "+(t.nargile+t.lule)+" kayıt bu özete dahil."
+    : "Vardiya boş. Satış ekle, sonra gün sonunu kapat.";
 }
 
-/* ---- GEÇMİŞ RAPORLAR ---- */
-function renderGecmis(){
-  const container=document.getElementById('gecmisList');
-  if(zReports.length===0){
-    container.innerHTML='<div class="card"><div class="empty">Henüz alınmış bir Z raporu yok.</div></div>';
+function waText(t,dateStr,timeStr){
+  var m="🌙 Gün Sonu\n";
+  m+="📅 "+dateStr+"   🕒 "+timeStr+"\n\n";
+  m+="Nargile: "+t.nargile+" adet\n";
+  if(t.lule>0) m+="Lüle: "+t.lule+" adet\n";
+  m+="Kazancım: "+money(t.gain);
+  return m;
+}
+function sendWa(text){
+  window.open("https://wa.me/"+cfg.wa+"?text="+encodeURIComponent(text),"_blank");
+}
+
+$("btnWaNow").addEventListener("click",function(){
+  var t=totals(sales);
+  if(!t.nargile && !t.lule){ alert("Adisyon boş, gönderilecek kayıt yok."); return; }
+  var p=nowParts();
+  sendWa(waText(t,p.date,p.time));
+});
+
+$("btnClose").addEventListener("click",function(){
+  if(!sales.length){ alert("Adisyon boş, kapatılacak bir şey yok."); return; }
+  var t=totals(sales), p=nowParts();
+  if(!confirm("Günü kapat: "+t.nargile+" nargile, kazanç "+money(t.gain)+". Onaylıyor musun?")) return;
+  days.unshift({id:p.stamp,date:p.date,time:p.time,nargile:t.nargile,lule:t.lule,gain:t.gain,sales:sales.slice()});
+  writeJSON(K.days,days);
+  sales=[]; writeJSON(K.sales,sales);
+  render(); renderHistory();
+  sendWa(waText(t,p.date,p.time));
+});
+
+/* ---------- geçmiş ---------- */
+function renderHistory(){
+  var box=$("historyList");
+  if(!days.length){
+    box.innerHTML='<div class="panel"><div class="empty" style="height:auto">Kapatılmış gün yok.<br>İlk günü kapattığında burada listelenir.</div></div>';
     return;
   }
-
-  let html='';
-  zReports.forEach(z=>{
-    html+='<div class="card day-card" data-id="'+z.id+'">';
-    html+='<div class="day-head">';
-    html+='<span class="date">'+displayDate(z.date)+'<span class="time">'+z.time+'</span></span>';
-    html+='<span class="count"><b>'+z.count+' nargile</b>'+fmt(z.revenue)+'</span>';
-    html+='</div>';
-    html+='<div class="day-detail" id="detail-'+z.id+'">';
-    html+=row('Satılan Nargile', z.count+' adet');
-    if(z.luleCount>0) html+=row('Satılan Lüle', z.luleCount+' adet');
-    html+=row('Ciro', fmt(z.revenue));
-    html+=row('Benim Payım (%60)', fmt(z.my));
-    html+='<div class="sale-list">';
-    z.sales.forEach(s=>{
-      html+='<div class="sale-item"><span class="t">'+s.time+'</span><span>'+s.tur+' × '+s.adet+' — Benim payım: '+fmt(s.benim)+'</span></div>';
-    });
-    html+='<div class="sale-item" style="margin-top:4px; padding-top:12px; border-top:2px solid var(--border);"><span class="t" style="color:var(--my);">Toplam Kazancım</span><span style="color:var(--my); font-weight:800; font-size:15px;">'+fmt(z.my)+'</span></div>';
-    html+='</div>';
-    html+='<button class="wa-btn" data-share="'+z.id+'"><span class="wa-ico">💬</span> WhatsApp\'ta Paylaş</button>';
-    html+='</div></div>';
+  var html="";
+  days.forEach(function(d){
+    html+='<div class="day" data-id="'+d.id+'">'+
+      '<div class="day-top">'+
+        '<span class="d">'+d.date+'<small class="num">'+d.time+' · '+d.nargile+' nargile'+(d.lule?" · "+d.lule+" lüle":"")+'</small></span>'+
+        '<span class="g num">'+money(d.gain)+'<small>kazanç</small></span>'+
+      '</div>'+
+      '<div class="day-body">'+
+        '<div class="kv"><span class="k">Nargile</span><span class="v num">'+d.nargile+' adet</span></div>'+
+        (d.lule?'<div class="kv"><span class="k">Lüle</span><span class="v num">'+d.lule+' adet</span></div>':'')+
+        '<div class="kv big"><span class="k">Kazancım</span><span class="v num">'+money(d.gain)+'</span></div>'+
+        '<div class="day-actions">'+
+          '<button class="btn wa" data-wa="'+d.id+'">WhatsApp</button>'+
+          '<button class="btn ghost warn" data-del="'+d.id+'">Sil</button>'+
+        '</div>'+
+      '</div></div>';
   });
-  container.innerHTML=html;
+  box.innerHTML=html;
 
-  document.querySelectorAll('.day-card').forEach(card=>{
-    card.addEventListener('click', (e)=>{
-      if(e.target.closest('.wa-btn')) return;
-      const id=card.dataset.id;
-      document.getElementById('detail-'+id).classList.toggle('open');
+  Array.prototype.forEach.call(box.querySelectorAll(".day"),function(card){
+    card.addEventListener("click",function(e){
+      if(e.target.closest("button")) return;
+      card.querySelector(".day-body").classList.toggle("open");
     });
   });
-  document.querySelectorAll('[data-share]').forEach(btn=>{
-    btn.addEventListener('click', (e)=>{
-      e.stopPropagation();
-      const id=parseInt(btn.dataset.share);
-      const z=zReports.find(r=>r.id===id);
-      if(!z) return;
-      const text=buildWaText('Z Raporu', displayDate(z.date), z.time, z.count, z.luleCount, z.revenue);
-      shareWhatsapp(text);
+  Array.prototype.forEach.call(box.querySelectorAll("[data-wa]"),function(b){
+    b.addEventListener("click",function(){
+      var d=days.filter(function(x){ return String(x.id)===b.dataset.wa; })[0];
+      if(d) sendWa(waText(d,d.date,d.time));
+    });
+  });
+  Array.prototype.forEach.call(box.querySelectorAll("[data-del]"),function(b){
+    b.addEventListener("click",function(){
+      if(!confirm("Bu gün kaydı silinsin mi?")) return;
+      days=days.filter(function(x){ return String(x.id)!==b.dataset.del; });
+      writeJSON(K.days,days);
+      renderHistory();
     });
   });
 }
 
-/* ---- BAŞLANGIÇ ---- */
-refreshPriceUI();
-renderOpen();
+/* ---------- menü ---------- */
+Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(btn){
+  btn.addEventListener("click",function(){
+    Array.prototype.forEach.call(document.querySelectorAll("nav button"),function(b){ b.classList.remove("on"); });
+    btn.classList.add("on");
+    Array.prototype.forEach.call(document.querySelectorAll(".page"),function(p){ p.classList.remove("on"); });
+    $("page"+btn.dataset.page).classList.add("on");
+    if(btn.dataset.page==="Gecmis") renderHistory();
+    if(btn.dataset.page==="GunSonu") renderGunSonu();
+  });
+});
+
+/* ---------- ayarlar ---------- */
+function hints(){
+  var n=parseFloat($("inNargile").value)||0;
+  var l=parseFloat($("inLule").value)||0;
+  var r=parseFloat($("inRate").value)||0;
+  $("hintNargile").textContent = n>0 ? "Payım: "+money(n*r/100) : "";
+  $("hintLule").textContent    = l>0 ? "Tamamı benim: "+money(l) : "";
+}
+function openSheet(){
+  $("inNargile").value=cfg.nargile;
+  $("inLule").value=cfg.lule;
+  $("inRate").value=cfg.rate;
+  $("inWa").value=cfg.wa;
+  hints();
+  $("sheetBg").classList.add("open");
+}
+function closeSheet(){ $("sheetBg").classList.remove("open"); }
+
+$("btnSettings").addEventListener("click",openSheet);
+$("btnSheetCancel").addEventListener("click",closeSheet);
+$("sheetBg").addEventListener("click",function(e){ if(e.target===$("sheetBg")) closeSheet(); });
+["inNargile","inLule","inRate"].forEach(function(id){ $(id).addEventListener("input",hints); });
+
+$("btnSheetSave").addEventListener("click",function(){
+  var n=parseFloat($("inNargile").value);
+  var l=parseFloat($("inLule").value);
+  var r=parseFloat($("inRate").value);
+  var w=($("inWa").value||"").replace(/[^0-9]/g,"");
+  if(!(n>0)||!(l>0)){ alert("Fiyatlar sıfırdan büyük olmalı."); return; }
+  if(!(r>0&&r<=100)){ alert("Kâr oranı 1 ile 100 arasında olmalı."); return; }
+  cfg.nargile=n; cfg.lule=l; cfg.rate=r; if(w) cfg.wa=w;
+  writeJSON(K.cfg,cfg);
+  renderPrices(); render(); closeSheet(); buzz(10);
+});
+
+/* ---------- başlat ---------- */
+renderPrices();
+render();
+renderHistory();
+})();
 </script>
 </body>
 </html>
