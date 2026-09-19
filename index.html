@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#08131A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -304,6 +304,22 @@
   }
   .field .hint{font-size:12px;color:var(--jade);font-weight:700;margin-top:6px;}
   .sheet-actions{display:flex;gap:9px;margin-top:14px;}
+
+  :root{--ink:#f3f6f5;--surface:#fff;--surface-2:#eaf1ee;--line:#dce6e1;--line-2:#edf1ee;--text:#183c32;--dim:#647b73;--jade:#087f63;--jade-dark:#07694f;--coral:#b86c36;--danger:#bf4242}
+  body.dark{--ink:#08131A;--surface:#0F2029;--surface-2:#152C36;--line:rgba(255,255,255,.09);--line-2:rgba(255,255,255,.05);--text:#E9F3F1;--dim:#8fa8b0;--jade:#3FD3B0;--coral:#F0A184}
+  .btn.primary,.prod .add{color:#fff} body.dark .btn.primary,body.dark .prod .add{color:#04211B}
+  .hero .amount{font-size:58px}.hero .sub{align-items:center}.hero .sub b{font-size:22px}
+  .prod .price,.prod .share,.row .gain,.row .what i{display:none}
+  .prod .tally{position:static;width:100%;height:48px;font-size:34px;background:none;text-align:left;justify-items:start;padding:0;margin-top:6px}
+  .prod{display:flex;flex-direction:column}.prod .name{order:-1}.prod .add{width:100%}
+  .money-detail{font-size:13px;color:var(--dim)}summary{cursor:pointer;padding:8px 0;font-weight:700}
+  .field select,.field input,select,input[type=month],input[type=date]{max-width:100%;background:var(--surface-2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;min-height:44px}
+  .field select{width:100%}.check{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13px}.check input{width:22px;height:22px}
+  .report-number{font-size:36px;font-weight:800;color:var(--jade)}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters>*{flex:1;min-width:120px}
+  .day-top .g{font-size:28px}.notice{padding:9px 12px;border-radius:10px;background:var(--surface-2);font-size:12px;line-height:1.5}
+  #storageWarning{position:fixed;top:0;left:0;right:0;background:#a52b2b;color:white;padding:12px;z-index:100}
+  .topbar .meta{font-size:10px}.panel{flex-shrink:0}#reportPanel{flex-shrink:0} .day{flex-shrink:0}button[hidden]{display:none!important}
+  @media(max-height:650px){.hero .amount{font-size:40px}.hero{padding:10px}.prod .tally{height:34px;font-size:28px}.prod{padding:10px}.app{gap:6px}}
 </style>
 </head>
 <body>
@@ -315,16 +331,16 @@
       <span class="label">Vardiya</span>
       <span class="meta num" id="clock">—</span>
     </div>
-    <button class="icon-btn" id="btnSettings" aria-label="Fiyat ayarları">⚙</button>
+    <button class="icon-btn" id="btnSettings" aria-label="Ayarlar">⚙</button>
   </div>
 
   <!-- ===== SATIŞ ===== -->
   <section class="page on" id="pageSatis">
     <div class="hero">
-      <div class="cap">Bu vardiyadaki kazancım</div>
-      <div class="amount num" id="heroGain">0 ₺</div>
+      <div class="cap" id="activeCafe">Yeni kafe · Bu vardiya</div>
+      <div class="amount num"><span id="heroNargile">0</span> <span style="font-size:18px">nargile</span></div>
       <div class="sub">
-        <span><b class="num" id="heroNargile">0</b> nargile</span>
+        <details class="money-detail"><summary>Kazanç ve fiyatlar</summary><div id="heroGain">0 ₺</div><div id="priceSummary"></div></details>
         <span><b class="num" id="heroLule">0</b> lüle</span>
       </div>
     </div>
@@ -366,7 +382,9 @@
         <div class="note" id="gsNote">Vardiya boş. Satış ekle, sonra gün sonunu kapat.</div>
       </div>
 
-      <button class="btn wa" id="btnWaNow">WhatsApp'a gönder</button>
+      <div class="panel"><h2>Vardiya tarihi</h2><input type="date" id="shiftDate" aria-label="Vardiya tarihi"><div class="note">Gece yarısından sonra da çalıştığın günü seçebilirsin.</div></div>
+<div class="panel"><h2>Borçlar ve ödeme planı</h2><div id="debtSummary"></div><details><summary>Borç ekle</summary><div class="field"><label for="debtName">Borç adı</label><input id="debtName" maxlength="80" placeholder="Örneğin: Kart borcu"></div><div class="field"><label for="debtAmount">Kalan tutar (₺)</label><input id="debtAmount" type="number" min="0.01" step="0.01"></div><button class="btn ghost" id="addDebt">Borcu ekle</button></details><div class="field"><label for="budget">Her ay borca ayıracağım tutar (₺)</label><input id="budget" type="number" min="0" step="1"></div><button class="btn ghost" id="saveBudget">Planı güncelle</button><div id="debtPlan" class="note"></div><div id="debtList"></div></div>
+<button class="btn wa" id="btnWaNow">WhatsApp'a gönder</button>
       <button class="btn primary" id="btnClose">Günü kapat ve kaydet</button>
       <div class="note">Günü kapatınca adisyon sıfırlanır, özet Geçmiş'e kaydedilir.</div>
     </div>
@@ -374,7 +392,7 @@
 
   <!-- ===== GEÇMİŞ ===== -->
   <section class="page" id="pageGecmis">
-    <div class="scroller" id="historyList"></div>
+    <div class="scroller"><div class="panel" id="reportPanel"><h2>Aylık rapor</h2><div class="filters"><select id="reportCafe" aria-label="Kafe"></select><input type="month" id="reportMonth" aria-label="Rapor ayı"></div><div id="monthlyReport"></div><button class="btn wa" id="waMonth">Aylık raporu paylaş</button></div><div id="historyList"></div></div>
   </section>
 
   <nav>
@@ -387,7 +405,10 @@
 <!-- ===== AYAR PANELİ ===== -->
 <div class="sheet-bg" id="sheetBg">
   <div class="sheet">
-    <h2>Fiyat ve pay</h2>
+    <h2>Ayarlar</h2><div class="field"><label for="theme">Tema</label><select id="theme"><option value="light">Beyaz</option><option value="dark">Koyu</option></select></div>
+<div class="field"><label for="cafeSelect">Aktif kafe / dönem</label><select id="cafeSelect"></select></div><div class="notice">15 Eylül 2026 öncesi kayıtlar Eski kafe'de; bu tarihten itibaren Yeni kafe'de gösterilir. Kayıtların tarihleri ve kazançları korunur.</div>
+<details><summary>Yeni kafe dönemi aç</summary><div class="field"><label for="cafeName">Kafe adı</label><input id="cafeName" maxlength="60" placeholder="Kafe adı"></div><div class="field"><label for="cafeStart">Başlangıç tarihi</label><input type="date" id="cafeStart" value="2026-09-15"></div><button class="btn ghost" id="newCafe">Dönemi ekle</button><p class="note">Yeni dönem, kendi başlangıcı ile sonraki dönemin başlangıcı arasındaki kayıtları gruplar. Hiçbir satış silinmez.</p></details>
+<h2>Fiyat ve pay</h2>
     <div class="sub">Nargileden payın orana göre hesaplanır. Lülenin tamamı senin.</div>
 
     <div class="field">
@@ -404,12 +425,14 @@
       <label for="inRate">Nargile kâr oranım (%)</label>
       <input type="number" inputmode="numeric" id="inRate" min="1" max="100" step="1">
     </div>
-    <div class="field">
+    <label class="check"><input type="checkbox" id="waEnabled">WhatsApp paylaşımını etkinleştir</label><div class="field">
       <label for="inWa">WhatsApp numarası (ülke kodlu)</label>
       <input type="tel" inputmode="numeric" id="inWa" placeholder="905XXXXXXXXX">
     </div>
 
-    <div class="sheet-actions">
+    <p class="note">Paylaşım yalnızca WhatsApp düğmesine bastığında açılır. Günü kapatmak mesaj göndermez.</p>
+<details><summary>Kayıt yedeği ve kurtarma</summary><p class="note">Yeni dosya veya farklı tarayıcı eski kayıt alanına erişemeyebilir. Eski uygulamayı silme. Buradan JSON yedeğini indirebilir ve geri yükleyebilirsin. İçe aktarma mevcut kayıtları birleştirir.</p><button class="btn ghost" id="exportBackup">Yedeği indir</button><label class="field">Yedek yükle<input id="importBackup" type="file" accept=".json,application/json"></label><button class="btn ghost" id="recoverPhoto">Fotoğraftaki 8 kaydı kurtar</button><p class="note">Yalnızca fotoğrafta görünen günlük özetleri ekler; satış ayrıntıları fotoğraftan bilinmiyor. Mevcut aynı tarih/saat kayıtları eklenmez.</p></details>
+<div class="sheet-actions">
       <button class="btn ghost" id="btnSheetCancel">Vazgeç</button>
       <button class="btn primary" id="btnSheetSave">Kaydet</button>
     </div>
@@ -424,11 +447,11 @@
 var mem={};
 var store={
   get:function(k){ try{ var v=localStorage.getItem(k); return v===null?(k in mem?mem[k]:null):v; }catch(e){ return (k in mem)?mem[k]:null; } },
-  set:function(k,v){ mem[k]=v; try{ localStorage.setItem(k,v); }catch(e){} }
+  set:function(k,v){ mem[k]=v; try{ localStorage.setItem(k,v); }catch(e){ storageError(); throw e; } }
 };
 var K={sales:"adisyon_acik_v3",days:"adisyon_gunler_v3",cfg:"adisyon_ayar_v3"};
 
-var cfg=Object.assign({nargile:290,lule:150,rate:60,wa:"905363320789"},readJSON(K.cfg,{}));
+var cfg=Object.assign({nargile:290,lule:150,rate:60,wa:"",waEnabled:false,theme:"light"},readJSON(K.cfg,{}));
 var sales=readJSON(K.sales,[]);
 var days=readJSON(K.days,[]);
 
@@ -477,7 +500,7 @@ function renderPrices(){
 /* ---------- ana ekran ---------- */
 function render(){
   var t=totals(sales);
-  $("heroGain").textContent=money(t.gain);
+  $("heroGain").textContent="Kazancım: "+money(t.gain);
   $("heroNargile").textContent=t.nargile;
   $("heroLule").textContent=t.lule;
 
@@ -509,6 +532,7 @@ function render(){
     });
   }
   renderGunSonu();
+  if(typeof ext!=="undefined" && ext) refreshExtra();
 }
 
 function addSale(tur,fiyat){
@@ -550,6 +574,8 @@ function waText(t,dateStr,timeStr){
   return m;
 }
 function sendWa(text){
+  if(!cfg.waEnabled) return;
+  if(!/^[1-9][0-9]{9,14}$/.test(cfg.wa)){alert("Ayarlardan ülke kodlu geçerli bir numara gir.");return;}
   window.open("https://wa.me/"+cfg.wa+"?text="+encodeURIComponent(text),"_blank");
 }
 
@@ -563,59 +589,26 @@ $("btnWaNow").addEventListener("click",function(){
 $("btnClose").addEventListener("click",function(){
   if(!sales.length){ alert("Adisyon boş, kapatılacak bir şey yok."); return; }
   var t=totals(sales), p=nowParts();
+  p.date=displayDate($("shiftDate").value);
+  if(!validDate($("shiftDate").value)){alert("Geçerli bir vardiya tarihi seç.");return;}
+  var shiftCafe=cafeFor({date:p.date});if(shiftCafe.id!==ext.active){alert("Seçilen tarih "+shiftCafe.name+" dönemine ait. Vardiya tarihini veya aktif kafeyi kontrol et.");return;}
   if(!confirm("Günü kapat: "+t.nargile+" nargile, kazanç "+money(t.gain)+". Onaylıyor musun?")) return;
-  days.unshift({id:p.stamp,date:p.date,time:p.time,nargile:t.nargile,lule:t.lule,gain:t.gain,sales:sales.slice()});
+  days.unshift({id:p.stamp,cafeId:ext.active,date:p.date,time:p.time,nargile:t.nargile,lule:t.lule,gain:t.gain,sales:sales.slice()});
   writeJSON(K.days,days);
   sales=[]; writeJSON(K.sales,sales);
   render(); renderHistory();
-  sendWa(waText(t,p.date,p.time));
 });
 
 /* ---------- geçmiş ---------- */
 function renderHistory(){
-  var box=$("historyList");
-  if(!days.length){
-    box.innerHTML='<div class="panel"><div class="empty" style="height:auto">Kapatılmış gün yok.<br>İlk günü kapattığında burada listelenir.</div></div>';
-    return;
-  }
-  var html="";
-  days.forEach(function(d){
-    html+='<div class="day" data-id="'+d.id+'">'+
-      '<div class="day-top">'+
-        '<span class="d">'+d.date+'<small class="num">'+d.time+' · '+d.nargile+' nargile'+(d.lule?" · "+d.lule+" lüle":"")+'</small></span>'+
-        '<span class="g num">'+money(d.gain)+'<small>kazanç</small></span>'+
-      '</div>'+
-      '<div class="day-body">'+
-        '<div class="kv"><span class="k">Nargile</span><span class="v num">'+d.nargile+' adet</span></div>'+
-        (d.lule?'<div class="kv"><span class="k">Lüle</span><span class="v num">'+d.lule+' adet</span></div>':'')+
-        '<div class="kv big"><span class="k">Kazancım</span><span class="v num">'+money(d.gain)+'</span></div>'+
-        '<div class="day-actions">'+
-          '<button class="btn wa" data-wa="'+d.id+'">WhatsApp</button>'+
-          '<button class="btn ghost warn" data-del="'+d.id+'">Sil</button>'+
-        '</div>'+
-      '</div></div>';
-  });
-  box.innerHTML=html;
-
-  Array.prototype.forEach.call(box.querySelectorAll(".day"),function(card){
-    card.addEventListener("click",function(e){
-      if(e.target.closest("button")) return;
-      card.querySelector(".day-body").classList.toggle("open");
-    });
-  });
-  Array.prototype.forEach.call(box.querySelectorAll("[data-wa]"),function(b){
-    b.addEventListener("click",function(){
-      var d=days.filter(function(x){ return String(x.id)===b.dataset.wa; })[0];
-      if(d) sendWa(waText(d,d.date,d.time));
-    });
-  });
-  Array.prototype.forEach.call(box.querySelectorAll("[data-del]"),function(b){
-    b.addEventListener("click",function(){
-      if(!confirm("Bu gün kaydı silinsin mi?")) return;
-      days=days.filter(function(x){ return String(x.id)!==b.dataset.del; });
-      writeJSON(K.days,days);
-      renderHistory();
-    });
+  renderMonthly();
+  var box=$("historyList");box.innerHTML="";
+  var selected=reportDays();
+  if(!selected.length){box.innerHTML='<div class="panel note">Bu dönem için kapatılmış kayıt yok.</div>';return;}
+  selected.slice().sort(function(a,b){return iso(b.date).localeCompare(iso(a.date))||String(b.time).localeCompare(String(a.time));}).forEach(function(d){
+    var card=document.createElement("div");card.className="day";card.style.marginBottom="10px";
+    card.innerHTML='<div class="day-top"><span class="d">'+esc(d.date)+'<small>'+esc(d.time)+' · '+esc(cafeFor(d).name)+'</small></span><span class="g num">'+d.nargile+'<small>nargile</small></span></div><details><summary>Kazanç ve ayrıntılar</summary><div class="kv"><span>Lüle</span><b>'+d.lule+'</b></div><div class="kv"><span>Kazancım</span><b>'+money(d.gain)+'</b></div>'+(d.summaryOnly?'<p class="note">Fotoğraftan kurtarılan günlük özet.</p>':'')+'<button class="btn wa">WhatsApp</button></details>';
+    var b=card.querySelector("button");b.hidden=!cfg.waEnabled;b.style.display=cfg.waEnabled?"flex":"none";b.onclick=function(){sendWa(waText(d,d.date,d.time));};box.appendChild(card);
   });
 }
 
@@ -644,6 +637,7 @@ function openSheet(){
   $("inLule").value=cfg.lule;
   $("inRate").value=cfg.rate;
   $("inWa").value=cfg.wa;
+  $("waEnabled").checked=!!cfg.waEnabled;$("theme").value=cfg.theme||"light";fillCafes();
   hints();
   $("sheetBg").classList.add("open");
 }
@@ -661,10 +655,71 @@ $("btnSheetSave").addEventListener("click",function(){
   var w=($("inWa").value||"").replace(/[^0-9]/g,"");
   if(!(n>0)||!(l>0)){ alert("Fiyatlar sıfırdan büyük olmalı."); return; }
   if(!(r>0&&r<=100)){ alert("Kâr oranı 1 ile 100 arasında olmalı."); return; }
-  cfg.nargile=n; cfg.lule=l; cfg.rate=r; if(w) cfg.wa=w;
+  if($("waEnabled").checked&&!/^[1-9][0-9]{9,14}$/.test(w)){alert("Ülke kodlu geçerli numara gir (905XXXXXXXXX).");return;}
+  if(sales.length&&$("cafeSelect").value!==ext.active){alert("Kafe değiştirmeden önce açık vardiyayı kapat.");return;}
+  cfg.nargile=n; cfg.lule=l; cfg.rate=r; cfg.wa=w;cfg.waEnabled=$("waEnabled").checked;cfg.theme=$("theme").value;ext.active=$("cafeSelect").value;saveExt();
   writeJSON(K.cfg,cfg);
   renderPrices(); render(); closeSheet(); buzz(10);
 });
+
+/* Kayıtları silmeden dönem, rapor ve yedek desteği */
+function storageError(){var b=$("storageWarning");if(!b){b=document.createElement("div");b.id="storageWarning";document.body.appendChild(b);}b.textContent="Kalıcı kayıt yazılamadı. Bu sayfayı kapatmadan Ayarlar → Yedeği indir seçeneğini kullan.";}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function iso(s){var a=String(s).split('.');return a.length===3?a[2]+'-'+a[1]+'-'+a[0]:String(s);}
+function displayDate(s){return String(s).split('-').reverse().join('.');}
+function validDate(s){return /^\d{4}-\d{2}-\d{2}$/.test(s)&&!isNaN(new Date(s+'T12:00:00').getTime())&&new Date(s+'T12:00:00').toISOString().slice(0,10)===s;}
+function localISO(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+var EK='adisyon_ek_v4';
+var ext=readJSON(EK,{cafes:[{id:'old',name:'Eski kafe',start:'2000-01-01'},{id:'new',name:'Yeni kafe',start:'2026-09-15'}],active:'new',debts:[],budget:0});
+function saveExt(){writeJSON(EK,ext);}
+// Ham v3 kayıtlarının ilk kopyası yalnızca bir kez alınır; asılları değişmez.
+try{if(!store.get('adisyon_gecis_yedegi_v4'))writeJSON('adisyon_gecis_yedegi_v4',{sales:sales,days:days,cfg:cfg});}catch(e){}
+function cafeFor(d){if(d.cafeId){var c=ext.cafes.find(function(c){return c.id===d.cafeId;});if(c)return c;}var date=iso(d.date);return ext.cafes.slice().sort(function(a,b){return b.start.localeCompare(a.start);}).find(function(c){return c.start<=date;})||ext.cafes[0];}
+function fillCafes(){['cafeSelect','reportCafe'].forEach(function(id){var el=$(id),v=el.value;el.innerHTML=ext.cafes.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>';}).join('');el.value=ext.cafes.some(function(c){return c.id===v;})?v:ext.active;});$('cafeSelect').value=ext.active;}
+if(!store.get(EK)&&sales.length)ext.active=cafeFor(sales[0]).id;
+$('shiftDate').value=sales.length&&validDate(ext.shiftDate)?ext.shiftDate:(sales.length&&validDate(iso(sales[0].date))?iso(sales[0].date):localISO(new Date()));$('shiftDate').onchange=function(){if(validDate(this.value)){ext.shiftDate=this.value;saveExt();}};$('reportMonth').value='2026-09';fillCafes();
+function reportDays(){var c=$('reportCafe').value,m=$('reportMonth').value;return days.filter(function(d){return cafeFor(d).id===c&&iso(d.date).slice(0,7)===m;});}
+var monthlyText='';
+function renderMonthly(){if(!ext)return;var m=$('reportMonth').value,c=ext.cafes.find(function(c){return c.id===$('reportCafe').value;})||ext.cafes[0];if(!/^\d{4}-\d{2}$/.test(m))return;
+ var rows=reportDays(),t=rows.reduce(function(t,d){t.nargile+=d.nargile;t.lule+=d.lule;t.gain+=d.gain;return t;},{nargile:0,lule:0,gain:0});
+ var first=m+'-01',end=localISO(new Date(Number(m.slice(0,4)),Number(m.slice(5,7)),0));var next=ext.cafes.filter(function(x){return x.start>c.start;}).sort(function(a,b){return a.start.localeCompare(b.start);})[0];
+ var start=c.start>first?c.start:first;if(next&&next.start<=end){var d=new Date(next.start+'T12:00:00');d.setDate(d.getDate()-1);end=localISO(d);}var inPeriod=start<=end;
+ var dates=new Set(rows.map(function(d){return d.date;})),avg=dates.size?t.nargile/dates.size:0;
+ var period=inPeriod?displayDate(start)+' – '+displayDate(end):'Bu ayda bu kafe için dönem yok';
+ monthlyText=c.name+' · Aylık rapor\n'+period+'\n'+t.nargile+' nargile · '+t.lule+' lüle\nKazancım: '+money(t.gain)+'\n'+dates.size+' kayıtlı çalışma günü. Günlük ortalama '+avg.toLocaleString('tr-TR',{maximumFractionDigits:1})+' nargile.';
+ $('monthlyReport').innerHTML='<p class="note">'+esc(period)+'</p><div class="report-number">'+t.nargile+' <span style="font-size:16px">nargile</span></div><p class="note">'+t.lule+' lüle · '+dates.size+' kayıtlı çalışma günü</p><details><summary>Kazanç toplamını göster</summary><b>'+money(t.gain)+'</b></details><div class="notice">'+(dates.size?'Bu dönemde '+t.nargile+' nargile sattın. Kayıtlı çalışma günü başına ortalaman '+avg.toLocaleString('tr-TR',{maximumFractionDigits:1})+' nargile.':'Henüz kapatılmış vardiya yok.')+'</div><p class="note">Yalnızca kapatılmış vardiyalar dahildir. Aynı günün vardiyaları birlikte hesaplanır. Yeni ayda ayrı rapor açılır; eski kayıtlar silinmez.</p>';
+ $('waMonth').style.display=cfg.waEnabled?'flex':'none';
+}
+function refreshExtra(){document.body.classList.toggle('dark',cfg.theme==='dark');document.querySelector('meta[name="theme-color"]').content=cfg.theme==='dark'?'#08131A':'#f3f6f5';var c=ext.cafes.find(function(c){return c.id===ext.active;});$('activeCafe').textContent=(c?c.name:'Kafe')+' · Bu vardiya';$('priceSummary').textContent='Nargile '+money(cfg.nargile)+' · Payım %'+cfg.rate+' · Lüle '+money(cfg.lule);$('btnWaNow').style.display=cfg.waEnabled?'flex':'none';renderMonthly();renderDebts();}
+$('reportMonth').onchange=renderHistory;$('reportCafe').onchange=renderHistory;$('waMonth').onclick=function(){sendWa(monthlyText);};
+$('newCafe').onclick=function(){var name=$('cafeName').value.trim(),start=$('cafeStart').value;if(!name||!validDate(start)){alert('Kafe adı ve geçerli başlangıç tarihi gir.');return;}if(sales.length){alert('Önce açık vardiyanı kaydet.');return;}var existing=ext.cafes.find(function(c){return c.start===start;});if(existing){if(!confirm('Bu tarihte '+existing.name+' var. Adı '+name+' olarak değişsin mi?'))return;existing.name=name;ext.active=existing.id;}else{var c={id:'c'+Date.now(),name:name,start:start};ext.cafes.push(c);ext.active=c.id;}saveExt();fillCafes();refreshExtra();alert('Kafe dönemi hazır. Fiyat ve payını aşağıdan ayarlayıp Kaydet’e bas.');};
+function remaining(d){return Math.max(0,d.amount-(d.payments||[]).reduce(function(t,p){return t+p.amount;},0));}
+function renderDebts(){var total=ext.debts.reduce(function(t,d){return t+remaining(d);},0);$('debtSummary').textContent='Kalan toplam: '+money(total);if(document.activeElement!==$('budget'))$('budget').value=ext.budget||'';
+ var budget=Number(ext.budget)||0,msg='Aylık ayırabileceğin tutarı gir; tahmini kapanış ayını hesaplayalım.';
+ if(!total)msg='Kayıtlı açık borcun yok.';else if(budget>0){var months=Math.ceil(total/budget),d=new Date();d=new Date(d.getFullYear(),d.getMonth()+months-1,1);msg='Bu ay ilk ödemeyi yaparsan, ayda '+money(budget)+' ile yaklaşık '+months+' ayda, '+d.toLocaleDateString('tr-TR',{month:'long',year:'numeric'})+' döneminde borcunu kapatabilirsin. Bu ayki hedef: '+money(Math.min(total,budget))+'. Yeni borç, faiz ve ek ücretler hesaba katılmaz; bu bir ödeme varsayımıdır.';}
+ $('debtPlan').textContent=msg;var box=$('debtList');box.innerHTML='';ext.debts.forEach(function(d){var row=document.createElement('div');row.className='panel';row.style.marginTop='10px';row.innerHTML='<b>'+esc(d.name)+'</b><div class="note">Kalan '+money(remaining(d))+' / '+money(d.amount)+'</div><div class="note">'+(d.payments||[]).map(function(p){return esc(p.date)+' · '+money(p.amount)+' ödeme';}).join('<br>')+'</div>';
+ if(remaining(d)>0){var input=document.createElement('input');input.type='number';input.min='0.01';input.step='0.01';input.placeholder='Ödenen tutar';input.setAttribute('aria-label',d.name+' ödeme tutarı');input.style.width='100%';var btn=document.createElement('button');btn.className='btn ghost';btn.textContent='Ödeme kaydet';btn.onclick=function(){var n=Number(input.value);if(!Number.isFinite(n)||n<=0||n>remaining(d)){alert('Kalan borcu aşmayan pozitif bir tutar gir.');return;}d.payments.push({amount:n,date:displayDate(localISO(new Date()))});saveExt();renderDebts();};row.append(input,btn);}box.appendChild(row);});}
+$('addDebt').onclick=function(){var name=$('debtName').value.trim(),n=Number($('debtAmount').value);if(!name||!Number.isFinite(n)||n<=0){alert('Borç adı ve pozitif tutar gir.');return;}ext.debts.push({id:'d'+Date.now(),name:name,amount:n,payments:[]});saveExt();$('debtName').value='';$('debtAmount').value='';renderDebts();};
+$('saveBudget').onclick=function(){var n=Number($('budget').value);if(!Number.isFinite(n)||n<0){alert('Geçerli tutar gir.');return;}ext.budget=n;saveExt();renderDebts();};
+function downloadBackup(){var data={format:'adisyon',version:4,exported:new Date().toISOString(),cfg:cfg,sales:sales,days:days,ext:ext,legacy:readJSON('adisyon_gecis_yedegi_v4',null)};var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='adisyon-yedek-'+localISO(new Date())+'.json';a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},5000);}
+$('exportBackup').onclick=downloadBackup;
+function finite(n){return typeof n==='number'&&Number.isFinite(n)&&n>=0;}
+function checkSale(s){return s&&['Nargile','Lüle'].includes(s.tur)&&finite(s.pay)&&finite(s.fiyat)&&finite(s.stamp)&&validDate(iso(s.date))&&/^\d\d:\d\d$/.test(s.time);}
+function checkDay(d){return d&&(typeof d.id==='number'||typeof d.id==='string')&&validDate(iso(d.date))&&/^\d\d:\d\d$/.test(d.time)&&Number.isInteger(d.nargile)&&d.nargile>=0&&Number.isInteger(d.lule)&&d.lule>=0&&finite(d.gain)&&(!d.sales||Array.isArray(d.sales)&&d.sales.every(checkSale));}
+function dayKey(d){return d.date+'|'+d.time;}
+$('importBackup').onchange=async function(){var f=this.files[0];if(!f)return;try{var data=JSON.parse(await f.text());if(!Array.isArray(data.days)||!data.days.every(checkDay)||!Array.isArray(data.sales)||!data.sales.every(checkSale))throw Error('Dosyadaki satış kayıtları geçerli değil.');
+ if(data.ext){var e=data.ext;if(!Array.isArray(e.cafes)||!e.cafes.length||!e.cafes.every(function(c){return typeof c.id==='string'&&typeof c.name==='string'&&validDate(c.start);})||!Array.isArray(e.debts)||!e.debts.every(function(d){return typeof d.id==='string'&&typeof d.name==='string'&&finite(d.amount)&&Array.isArray(d.payments)&&d.payments.every(function(p){return finite(p.amount)&&validDate(iso(p.date));});})||!finite(e.budget))throw Error('Dönem veya borç bilgisi geçersiz.');}
+ if(!confirm('Yedekteki kayıtlar mevcut kayıtlara eklensin mi? Mevcut aynı tarih/saat kayıtları korunur.'))return;
+ writeJSON('adisyon_son_ice_aktarma_yedegi',{days:days,sales:sales,ext:ext,cfg:cfg});
+ var keys=new Set(days.map(dayKey));data.days.forEach(function(d){if(!keys.has(dayKey(d))){days.push(d);keys.add(dayKey(d));}});
+ var stamps=new Set(sales.map(function(s){return s.stamp;}));days.forEach(function(d){(d.sales||[]).forEach(function(s){stamps.add(s.stamp);});});data.sales.forEach(function(s){if(!stamps.has(s.stamp)){sales.push(s);stamps.add(s.stamp);}});
+ if(data.ext){data.ext.cafes.forEach(function(c){if(!ext.cafes.some(function(x){return x.id===c.id;}))ext.cafes.push(c);});data.ext.debts.forEach(function(d){if(!ext.debts.some(function(x){return x.id===d.id;}))ext.debts.push(d);});if(!ext.budget)ext.budget=data.ext.budget;}
+ writeJSON(K.days,days);writeJSON(K.sales,sales);saveExt();fillCafes();render();renderHistory();alert('Kayıtlar birleştirildi. Aynı kimlikteki mevcut borç ve dönem bilgileri korundu.');
+ }catch(e){alert('Yükleme tamamlanamadı: '+e.message);}this.value='';};
+$('recoverPhoto').onclick=function(){if(!confirm('Fotoğrafta görünen 8 günlük özet eklensin mi? Aynı tarih ve saatteki mevcut kayıtlar korunur.'))return;var rows=[['19.09.2026','00:44',16,3200],['18.09.2026','12:45',10,2000],['17.09.2026','13:06',8,1600],['16.09.2026','00:26',10,2000],['15.09.2026','15:31',15,3000],['11.09.2026','23:39',3,522],['07.09.2026','23:56',2,348],['07.09.2026','00:17',3,522]],added=0;rows.forEach(function(r){var d={id:'photo-'+r[0]+'-'+r[1],date:r[0],time:r[1],nargile:r[2],lule:0,gain:r[3],sales:[],summaryOnly:true};if(!days.some(function(x){return dayKey(x)===dayKey(d);})){days.push(d);added++;}});writeJSON(K.days,days);renderHistory();refreshExtra();alert(added+' kayıt eklendi. Fotoğrafta görünmeyen kayıtlar bu yöntemle kurtarılamaz.');};
+// Ay değiştirilince rapor kendiliğinden yeni aya geçer; elle seçilen geçmiş ay korunur.
+var observedMonth=localISO(new Date()).slice(0,7);$('reportMonth').value=observedMonth;
+setInterval(function(){var m=localISO(new Date()).slice(0,7);if(m!==observedMonth){if($('reportMonth').value===observedMonth)$('reportMonth').value=m;observedMonth=m;renderHistory();}},60000);
 
 /* ---------- başlat ---------- */
 renderPrices();
