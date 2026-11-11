@@ -15,6 +15,10 @@ main{flex:1;min-height:0;min-width:0;overflow:hidden}.page{display:none;height:1
 .nav{flex:0 0 66px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;align-items:stretch;background:white;border:1px solid var(--border);border-radius:19px;padding:6px;box-shadow:var(--shadow);z-index:5}.nav button{border:0;border-radius:14px;background:transparent;color:var(--muted);font-size:11px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.nav button .navIcon{font-size:19px;line-height:1}.nav button.active{color:var(--green);background:var(--pale)}
 .modal{position:fixed;inset:0;background:#0b2419a8;z-index:40;display:none;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.sheet{width:min(500px,100%);max-height:calc(100dvh - 32px);border-radius:25px;background:white;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 75px #071c1545}.sheet.wide{width:min(610px,100%)}.sheetTop{padding:17px 19px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px;flex:0 0 auto}.sheetTop h2{font-size:17px;margin:0}.sheetTop p{font-size:12px;color:var(--muted);margin:4px 0 0}.closeX{height:37px;width:37px;flex-shrink:0;border:0;border-radius:12px;background:#f0f4f1;color:var(--ink);font-size:22px}.sheetBody{padding:16px 19px 19px;overflow-y:auto;flex:1;min-height:0;overscroll-behavior:contain}.sheetFooter{padding:12px 19px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--border);background:#fff;flex:0 0 auto;box-shadow:0 -8px 24px #132f2608}.flavorChoices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.flavor{min-width:0;min-height:82px;border:1.5px solid var(--border);border-radius:16px;background:#f8fbf9;padding:10px 6px;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:800}.flavor span{font-size:23px;line-height:1}.flavor.selected{border-color:var(--green);background:var(--pale)}.modeTabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.modeTabs button{border:1px solid var(--border);padding:10px;border-radius:12px;background:#f6faf7;color:var(--ink);font-size:13px;font-weight:800}.modeTabs button.active{border-color:var(--green);background:var(--pale);color:var(--green)}.chosenLine{font-weight:800;font-size:12px;margin:12px 0 2px}.toast{position:fixed;z-index:80;bottom:94px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.2s;background:#17372c;color:#fff;font-weight:750;border-radius:12px;padding:11px 15px;max-width:90%;text-align:center;white-space:nowrap}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:760px){.app{max-width:580px;padding:calc(10px + env(safe-area-inset-top)) 12px calc(7px + env(safe-area-inset-bottom));gap:10px}.layout{display:block}.layout>.stack+ .stack{margin-top:12px}.onlyDesktop{display:none!important}.card{padding:15px}.hero{min-height:164px}.count{font-size:62px}.nav{flex-basis:64px}.modal{align-items:flex-end;padding:0}.sheet,.sheet.wide{width:100%;max-height:calc(100dvh - 18px);border-radius:24px 24px 0 0}.sheetTop{padding:16px 17px 11px}.sheetBody{padding:14px 17px 16px}.sheetFooter{padding:11px 17px calc(12px + env(safe-area-inset-bottom))}}@media(max-width:360px){.brand h1{font-size:18px}.tool{padding:0 8px}.flavorChoices{grid-template-columns:repeat(2,minmax(0,1fr))}.stockForm{grid-template-columns:1fr 65px 60px}.hourRow{grid-template-columns:40px 1fr auto auto}}
+
+/* Kazanç analizi: basit özet, ayrıntılar isteğe bağlı */
+.estimateCard .cardhead{margin-bottom:6px}.estimateHeadline{display:flex;flex-direction:column;gap:3px;background:linear-gradient(135deg,#e7f5ee,#f5faf6);border:1px solid #d8eade;padding:16px 15px;border-radius:17px;margin:13px 0}.estimateHeadline small{color:#587566;font-size:12px;font-weight:750}.estimateHeadline strong{font-size:clamp(29px,6vw,39px);font-weight:950;letter-spacing:-.045em;color:var(--green);line-height:1.2;font-variant-numeric:tabular-nums}.estimateHeadline .tiny{color:#587566;line-height:1.4}.estimateRows{display:grid;gap:0}.estimateLine{padding:11px 2px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid var(--border)}.estimateLine:last-child{border-bottom:0}.estimateLine b{display:block;font-size:13px}.estimateLine small{font-size:11px;color:var(--muted);display:block;margin-top:2px}.estimateLine strong{font-size:15px;flex-shrink:0;font-variant-numeric:tabular-nums}.estimateLine strong.negative{color:#ad5140}.estimateLine strong.positive{color:var(--green)}.estimateNotice{font-size:12px;line-height:1.55;color:#6e7f75;background:#f6f8f6;border-radius:12px;padding:11px 12px;margin:12px 0}.estimateDetails{border-top:1px solid var(--border);margin-top:11px;padding-top:12px}.estimateDetails summary{color:var(--green);font-weight:850;cursor:pointer;list-style-position:inside}.estimateInputs{margin-top:13px}.estimateInputs .field label{min-height:31px;display:flex;align-items:end}.estimateInputs input{font-variant-numeric:tabular-nums}
+@media(max-width:390px){.estimateInputs{grid-template-columns:1fr 1fr}.estimateInputs .field label{font-size:11px;min-height:43px}.estimateInputs .field input{padding:9px}.estimateLine strong{font-size:14px}}
 </style>
 </head>
 <body>
@@ -29,6 +33,29 @@ main{flex:1;min-height:0;min-width:0;overflow:hidden}.page{display:none;height:1
 <section class="page" id="statsPage"><div class="layout"><div class="stack">
 <div class="card"><div class="cardhead"><h2>Satış istatistikleri</h2><span id="statsPeriod" class="small muted"></span></div><div class="statGrid"><div class="statTile"><small>Bugün nargile</small><strong id="todayTotal">0</strong></div><div class="statTile"><small>Bu hafta</small><strong id="weekTotal">0</strong></div><div class="statTile"><small>Geçen hafta</small><strong id="prevWeekTotal">0</strong></div><div class="statTile"><small>Bu ay nargile</small><strong id="monthTotal">0</strong></div></div></div>
 <div class="card"><div class="cardhead"><h2>Ciro ve kazanç</h2></div><div class="statGrid"><div class="miniMetric"><small>Bugünkü ciro</small><strong id="todayRevenue" class="valueSmall">0 ₺</strong></div><div class="miniMetric"><small>Haftalık ciro</small><strong id="weekRevenue" class="valueSmall">0 ₺</strong></div><div class="miniMetric"><small>Aylık ciro</small><strong id="monthRevenue" class="valueSmall">0 ₺</strong></div><div class="miniMetric"><small>Bu ay satış kârım</small><strong id="monthProfit" class="valueSmall">0 ₺</strong></div></div><p class="note">Ciro toplam satış bedelidir. Senin payın ve günlük garsonluk ücreti ayrı hesaplanır.</p></div>
+<div class="card estimateCard" id="estimateCard">
+  <div class="cardhead"><h2>🧮 Kazanç Analizi</h2><span class="pill">Tahmini hesap</span></div>
+  <p class="note" id="estimatePeriod">İşe başladığın tarihten bugüne yapılan tahmin.</p>
+  <div class="estimateHeadline"><small>Masraflardan sonra sende kalabilecek tutar</small><strong id="estimateNet">—</strong><span class="tiny" id="estimateRange"></span></div>
+  <div class="estimateRows" id="estimateRows"></div>
+  <p class="estimateNotice" id="estimateNotice"></p>
+  <details class="estimateDetails" id="analysisControls"><summary>⚙️ Tahmini hesabı düzenle</summary>
+    <p class="note">İlk değerler verdiğin bilgilere göre örnektir. Sayıları değiştirince tahmin hemen güncellenir ve bu cihazda saklanır.</p>
+    <div class="split estimateInputs">
+      <div class="field"><label for="estAverage">Günde ortalama kaç nargile?</label><input id="estAverage" data-est="avgSales" type="number" min="0" max="100" step="1" inputmode="numeric"></div>
+      <div class="field"><label for="estWeeklyDays">Haftada kaç gün çalışıyorsun?</label><input id="estWeeklyDays" data-est="daysPerWeek" type="number" min="1" max="7" step="1" inputmode="numeric"></div>
+      <div class="field"><label for="estWageDays">Kaç takvim gündür günlük yevmiye alıyorsun?</label><input id="estWageDays" data-est="wageSinceDays" type="number" min="0" max="3650" step="1" inputmode="numeric"></div>
+      <div class="field"><label for="estCoalBags">Bir alımda kaç torba köz?</label><input id="estCoalBags" data-est="coalBags" type="number" min="0" max="1000" step="1" inputmode="numeric"></div>
+      <div class="field"><label for="estBagPrice">Bir torba köz fiyatı (₺)</label><input id="estBagPrice" data-est="coalBagPrice" type="number" min="0" step="1" inputmode="decimal"></div>
+      <div class="field"><label for="estCoalCycle">Kaç günde bir köz alıyorsun?</label><input id="estCoalCycle" data-est="coalCycle" type="number" min="1" max="365" step="1" inputmode="numeric"></div>
+      <div class="field"><label for="estTobaccoCost">Bir tütün alımı (₺)</label><input id="estTobaccoCost" data-est="tobaccoCost" type="number" min="0" step="1" inputmode="decimal"></div>
+      <div class="field"><label for="estTobaccoCycle">Kaç günde bir tütün alıyorsun?</label><input id="estTobaccoCycle" data-est="tobaccoCycle" type="number" min="1" max="365" step="1" inputmode="numeric"></div>
+      <div class="field"><label for="estOther">Diğer günlük giderim (₺)</label><input id="estOther" data-est="otherDaily" type="number" min="0" step="1" inputmode="decimal"></div>
+    </div>
+    <button class="btn light full" id="estDefaults" type="button" style="margin-top:13px">Örnek değerlere dön</button>
+    <p class="note">İşe başlama tarihi ve günlük yevmiye tutarı Ayarlar'dan değiştirilebilir. Masraflar bu hesapta alım sıklığına göre paylaştırılır; gerçek ödeme ve borç kayıtları değildir.</p>
+  </details>
+</div>
 <div class="card"><div class="cardhead"><h2>Haftalık satış grafiği</h2><span id="weekRange" class="tiny muted"></span></div><div id="weekBars" class="barChart"></div></div>
 <div class="card"><div class="cardhead"><h2>Hangi saatte kaç satış?</h2><select id="hourPeriod" aria-label="Saatlik rapor dönemi" style="max-width:118px;border:1px solid var(--border);border-radius:11px;background:#fff;padding:9px"><option value="today">Bugün</option><option value="week">Bu hafta</option><option value="month">Bu ay</option></select></div><div id="hourRows"></div></div>
 </div><aside class="stack"><div class="card"><h2>Aylık tütün dağılımı</h2><p class="note">Karışımlar her aromaya ayrı sayılır.</p><div id="monthFlavor"></div></div><div class="card"><h2>Kısa değerlendirme</h2><div id="statsComment" class="note" style="margin-top:10px"></div></div></aside></div></section>
@@ -61,9 +88,10 @@ const icons={'Love66':'💗','Yanık Şeftali':'🍑','Cappuccino':'☕','Lady K
 const defaultCfg={nargile:350,lule:200,lulePay:100,rate:57,theme:'light',waiterDaily:1000,tobaccoProfit:{},customFlavors:[],hideCounts:false,tobaccoEnabled:true};
 let cfg={...defaultCfg,...read(K.cfg,{})};
 let sales=read(K.sales,[]),days=read(K.days,[]);
-const defaultExt={cafes:[{id:'old',name:'Eski kafe',start:'2000-01-01'},{id:'new',name:'Yeni kafe',start:'2026-09-15'}],active:'new',stockGrams:{},tobaccoStock:{},debts:[]};
+const incomeDefaults={avgSales:12,daysPerWeek:7,wageSinceDays:24,coalBags:5,coalBagPrice:2000,coalCycle:18,tobaccoCost:5000,tobaccoCycle:14,otherDaily:0};
+const defaultExt={cafes:[{id:'old',name:'Eski kafe',start:'2000-01-01'},{id:'new',name:'Yeni kafe',start:'2026-09-15'}],active:'new',stockGrams:{},tobaccoStock:{},debts:[],incomeAnalysis:{...incomeDefaults}};
 let extSource=read(EK,{});let ext={...defaultExt,...extSource};
-function normalize(){cfg.customFlavors=Array.isArray(cfg.customFlavors)?cfg.customFlavors:[];cfg.tobaccoProfit=cfg.tobaccoProfit&&typeof cfg.tobaccoProfit==='object'?cfg.tobaccoProfit:{};cfg.theme='light';sales=Array.isArray(sales)?sales:[];days=Array.isArray(days)?days:[];ext.cafes=Array.isArray(ext.cafes)&&ext.cafes.length?ext.cafes:defaultExt.cafes.map(x=>({...x}));if(!ext.cafes.some(c=>c.id===ext.active))ext.active=ext.cafes[ext.cafes.length-1].id;if(!Object.prototype.hasOwnProperty.call(extSource,'stockGrams')||!ext.stockGrams||typeof ext.stockGrams!=='object'){ext.stockGrams={};const aliases={'Kapuçino':'Cappuccino','Love Lady':'Lady Killer','Diamond Deja Vu':'Deja Vu'};for(const [name,kg] of Object.entries(ext.tobaccoStock||{}))ext.stockGrams[aliases[name]||name]=Math.round((Number(kg)||0)*1000)}extSource=ext; }
+function normalize(){cfg.customFlavors=Array.isArray(cfg.customFlavors)?cfg.customFlavors:[];cfg.tobaccoProfit=cfg.tobaccoProfit&&typeof cfg.tobaccoProfit==='object'?cfg.tobaccoProfit:{};cfg.theme='light';sales=Array.isArray(sales)?sales:[];days=Array.isArray(days)?days:[];ext.cafes=Array.isArray(ext.cafes)&&ext.cafes.length?ext.cafes:defaultExt.cafes.map(x=>({...x}));if(!ext.cafes.some(c=>c.id===ext.active))ext.active=ext.cafes[ext.cafes.length-1].id;ext.incomeAnalysis={...incomeDefaults,...(ext.incomeAnalysis&&typeof ext.incomeAnalysis==='object'?ext.incomeAnalysis:{})};if(!Object.prototype.hasOwnProperty.call(extSource,'stockGrams')||!ext.stockGrams||typeof ext.stockGrams!=='object'){ext.stockGrams={};const aliases={'Kapuçino':'Cappuccino','Love Lady':'Lady Killer','Diamond Deja Vu':'Deja Vu'};for(const [name,kg] of Object.entries(ext.tobaccoStock||{}))ext.stockGrams[aliases[name]||name]=Math.round((Number(kg)||0)*1000)}extSource=ext; }
 normalize();
 function save(){write(K.cfg,cfg);write(K.sales,sales);write(K.days,days);write(EK,ext)}
 const flavors=()=>[...baseFlavors,...cfg.customFlavors.filter(f=>!baseFlavors.some(b=>b.toLocaleLowerCase('tr')===String(f).toLocaleLowerCase('tr')))];
@@ -115,6 +143,50 @@ $('#stockBtn').addEventListener('click',()=>{renderStock();show('stockModal')});
 $('#stockItems').addEventListener('click',e=>{const add=e.target.closest('[data-stock-add]'),zero=e.target.closest('[data-stock-zero]');if(!add&&!zero)return;const i=Number((add||zero).dataset[add?'stockAdd':'stockZero']),n=flavors()[i];if(!n)return;if(zero){if(!confirm(n+' tütün stoğunu sıfırlamak istiyor musun?'))return;ext.stockGrams[n]=0}else{const inp=$(`[data-stock-input="${i}"]`),kg=Number(inp.value.trim().replace(',','.'));if(!Number.isFinite(kg)||kg<=0)return toast('Geçerli kilogram yaz');ext.stockGrams[n]=Math.round((Number(ext.stockGrams[n])||0)+kg*1000)}save();renderStock();toast(n+' stoğu güncellendi')});
 // İstatistikler ve tarihler
 const sumNum=(a,k)=>a.reduce((r,x)=>r+(Number(x[k])||0),0);
+// Kazanç analizi: geçmiş gün sayısı ve ayarlanabilir ortalamalara dayalı projeksiyon.
+// Satış adedi kayıtları eksik olabilir; bu nedenle geçmiş tüm günler için varsayılan satış sayısı kullanılmaz.
+function estimateValues(){
+  const a=ext.incomeAnalysis,span=workDays();
+  const clamp=(v,min,max)=>Math.max(min,Math.min(max,Number(v)||0));
+  const weekDays=clamp(a.daysPerWeek,1,7),shifts=Math.round(span*weekDays/7);
+  const wageWindow=Math.min(span,clamp(a.wageSinceDays,0,3650));
+  const wageShifts=Math.min(shifts,Math.round(wageWindow*weekDays/7));
+  const avg=clamp(a.avgSales,0,100),estimatedN=avg*shifts;
+  // Mevcut pay oranıyla geçmişi tahmin eder. Farklı eski oranlar bu hesapta bilinmez.
+  const salePay=Math.round((Number(cfg.nargile)||350)*(Number(cfg.rate)||57)/100);
+  const hookah=estimatedN*salePay,waiter=wageShifts*(Number(cfg.waiterDaily)||0);
+  const bags=clamp(a.coalBags,0,1000),bagPrice=clamp(a.coalBagPrice,0,1000000);
+  const coalPerOrder=bags*bagPrice;
+  const coalCycle=clamp(a.coalCycle,1,365),tobaccoCycle=clamp(a.tobaccoCycle,1,365);
+  const coal=span/coalCycle*coalPerOrder,tobacco=span/tobaccoCycle*clamp(a.tobaccoCost,0,1e7);
+  const other=shifts*clamp(a.otherDaily,0,1e6);
+  const net=hookah+waiter-coal-tobacco-other;
+  const netIf14=hookah+waiter-span/14*coalPerOrder-tobacco-other;
+  const netIf21=hookah+waiter-span/21*coalPerOrder-tobacco-other;
+  return {span,shifts,wageShifts,avg,estimatedN,salePay,hookah,waiter,coal,tobacco,other,net,netLow:Math.min(netIf14,netIf21),netHigh:Math.max(netIf14,netIf21),coalPerOrder,coalCycle,tobaccoCycle};
+}
+function renderEstimate(){
+  const v=estimateValues();
+  $('#estimatePeriod').textContent=`${v.span} takvim günü · yaklaşık ${v.shifts} çalışma günü · ${v.avg} nargile/gün varsayımı`;
+  $('#estimateNet').textContent=money(v.net);
+  $('#estimateRange').textContent=`Köz alımı 14–21 günde bir olursa: ${money(v.netLow)} – ${money(v.netHigh)}`;
+  const line=(name,detail,value,minus)=>`<div class="estimateLine"><div><b>${name}</b><small>${detail}</small></div><strong class="${minus?'negative':'positive'}">${minus?'−':'+'}${money(value)}</strong></div>`;
+  const a=ext.incomeAnalysis;
+  $('#estimateRows').innerHTML=
+    line('Nargileden payım',`${Number(v.estimatedN).toLocaleString('tr-TR',{maximumFractionDigits:1})} tahmini nargile × ${money(v.salePay)}`,v.hookah,false)+
+    line('Garsonluk',`${v.wageShifts} çalışma günü × ${money(cfg.waiterDaily)}`,v.waiter,false)+
+    line('Köz gideri',`${Number(a.coalBags)||0} torba × ${money(a.coalBagPrice)} · ${v.coalCycle} günde bir`,v.coal,true)+
+    line('Tütün gideri',`${v.tobaccoCycle} günde bir ${money(a.tobaccoCost)}`,v.tobacco,true)+
+    (v.other?line('Diğer günlük gider',`${v.shifts} gün × ${money(a.otherDaily)}`,v.other,true):'');
+  const uniqueDays=new Set(allSales().filter(x=>x.tur!=='Lüle').map(x=>x.date).filter(Boolean));
+  $('#estimateNotice').textContent=`Bu kesin kazanç veya kasa bakiyesi değildir. Çalıştığın varsayılan günlerde aynı ortalama satışı yaptığın kabul edilir; geçmiş fiyat değişiklikleri, borçlar, eksik vardiyalar ve diğer ödemeler bilinmediği için sonuç tahminidir.${uniqueDays.size?' Panelde '+uniqueDays.size+' ayrı günün satış kalemleri kayıtlı.':''}`;
+}
+function fillEstimateInputs(){document.querySelectorAll('[data-est]').forEach(el=>{el.value=ext.incomeAnalysis[el.dataset.est]??incomeDefaults[el.dataset.est]})}
+$$('[data-est]').forEach(el=>{
+  el.addEventListener('input',()=>{const v=Number(el.value);if(!el.value.trim()||!Number.isFinite(v))return;const min=Number(el.min||0),max=el.max?Number(el.max):1e8;ext.incomeAnalysis[el.dataset.est]=Math.max(min,Math.min(max,v));renderEstimate()});
+  el.addEventListener('change',()=>{const v=Number(el.value),min=Number(el.min||0),max=el.max?Number(el.max):1e8;ext.incomeAnalysis[el.dataset.est]=Number.isFinite(v)?Math.max(min,Math.min(max,v)):incomeDefaults[el.dataset.est];el.value=ext.incomeAnalysis[el.dataset.est];save();renderEstimate()});
+});
+$('#estDefaults').addEventListener('click',()=>{if(!confirm('Tahmini hesap ayarları örnek değerlere dönsün mü?'))return;ext.incomeAnalysis={...incomeDefaults};fillEstimateInputs();save();renderEstimate();toast('Tahmin değerleri sıfırlandı')});
 function renderStats(){const now=new Date(),today=dayKey(now),month=today.slice(0,7),week0=currentWeekStart(now),last0=new Date(week0);last0.setDate(last0.getDate()-7);const weekKey=dayKey(week0),lastKey=dayKey(last0),tomorrow=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1),nextWeek=new Date(week0);nextWeek.setDate(nextWeek.getDate()+7);const weekEnd=dayKey(nextWeek),nowEnd=dayKey(tomorrow),map=statsByDate();const asEntries=Object.entries(map),get=(f,k)=>sumNum(asEntries.filter(([d])=>f(d)).map(x=>x[1]),k);const nToday=get(d=>d===today,'n'),nWeek=get(d=>d>=weekKey&&d<weekEnd,'n'),nLast=get(d=>d>=lastKey&&d<weekKey,'n'),nMonth=get(d=>d.slice(0,7)===month,'n');
 $('#statsPeriod').textContent=now.toLocaleDateString('tr-TR',{month:'short',year:'numeric'});$('#todayTotal').textContent=nToday;$('#weekTotal').textContent=nWeek;$('#prevWeekTotal').textContent=nLast;$('#monthTotal').textContent=nMonth;$('#weekRange').textContent=week0.toLocaleDateString('tr-TR',{day:'numeric',month:'numeric'})+' – '+new Date(nextWeek.getTime()-86400000).toLocaleDateString('tr-TR',{day:'numeric',month:'numeric'});
 const records=allSales(),periodSales=(start,end)=>records.filter(s=>s.date>=start&&s.date<end);const todaySales=periodSales(today,nowEnd),weekSales=periodSales(weekKey,weekEnd),monthSales=records.filter(s=>s.date.slice(0,7)===month);
@@ -123,7 +195,7 @@ $('#todayRevenue').textContent=money(sumNum(todaySales,'fiyat'));$('#weekRevenue
 const weekArr=Array.from({length:7},(_,i)=>{const d=new Date(week0);d.setDate(d.getDate()+i);return {key:dayKey(d),name:['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'][i],n:(map[dayKey(d)]||{}).n||0}}),mx=Math.max(1,...weekArr.map(x=>x.n));$('#weekBars').innerHTML=weekArr.map(x=>`<div class="barCol"><strong>${x.n}</strong><div class="barTrack"><span style="height:${x.n?Math.max(4,x.n/mx*100):0}%"></span></div><small>${x.name}</small></div>`).join('');
 const fc={};for(const s of monthSales){if(s.tur==='Lüle')continue;const fl=Array.isArray(s.flavors)&&s.flavors.length?s.flavors:String(s.tobacco||'Tütün belirtilmedi').split(/\s+\+\s+/);for(const name of fl)fc[name]=(fc[name]||0)+1}const top=Object.entries(fc).sort((a,b)=>b[1]-a[1]),mf=Math.max(1,...top.map(x=>x[1]));$('#monthFlavor').innerHTML=top.length?top.map(([name,n])=>`<div class="flavorBar"><b>${esc(name)}</b><span class="flavorMeter"><i style="width:${n/mf*100}%"></i></span><strong>${n}</strong></div>`).join(''):'<p class="note">Bu ay için tütün satış kaydı yok.</p>';
 $('#statsComment').innerHTML=nWeek||nLast?`<p>Bu hafta <b>${nWeek}</b>, geçen hafta <b>${nLast}</b> nargile. ${nWeek>nLast?'Geçen haftanın üzerindesin.':nWeek<nLast?'Geçen haftanın altındasın.':'Haftalık adetler eşit.'}</p><p>Bu ay toplam <b>${nMonth}</b> nargile kayıtlı.</p>`:'Satış yaptıkça hafta ve ay karşılaştırması burada görünecek.';
-renderHourly(todaySales,weekSales,monthSales)}
+renderHourly(todaySales,weekSales,monthSales);renderEstimate()}
 function renderHourly(t,w,m){const p=$('#hourPeriod').value,records=p==='today'?t:p==='week'?w:m;const rows=Array.from({length:24},(_,h)=>({h,n:0,r:0}));for(const s of records){const match=/^([01]\d|2[0-3]):[0-5]\d$/.exec(String(s.time||''));if(!match)continue;const r=rows[Number(match[1])];r.n++;r.r+=Number(s.fiyat)||0}const have=rows.filter(x=>x.n>0),mx=Math.max(1,...rows.map(x=>x.n));$('#hourRows').innerHTML=have.length?have.map(x=>`<div class="hourRow"><b>${pad(x.h)}:00</b><span class="hourTrack"><i style="width:${x.n/mx*100}%"></i></span><span>${x.n} adet</span><span class="amount">${money(x.r)}</span></div>`).join(''):'<p class="note">Bu dönemde saat bilgisi bulunan satış yok.</p>'}
 $('#hourPeriod').addEventListener('change',renderStats);
 // Gün sonu
@@ -145,9 +217,9 @@ $('#cafeSelect').addEventListener('change',()=>{const c=ext.cafes.find(x=>x.id==
 $('#newCafe').addEventListener('click',()=>{const name=$('#cafeName').value.trim(),start=$('#newCafeStart').value;if(!name||!start)return toast('Kafe adı ve tarih gir');const c={id:'c'+Date.now(),name,start};ext.cafes.push(c);ext.active=c.id;save();fillSettings();renderAll();$('#cafeName').value='';toast('Yeni kafe dönemi açıldı')});
 $('#reportMonth').addEventListener('change',renderHistory);$('#reportCafe').addEventListener('change',renderHistory);
 $('#exportBtn').addEventListener('click',()=>{const d={version:6,cfg,sales,days,ext},a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:'application/json'}));a.href=url;a.download='nargile-panel-yedek-'+dayKey(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2500);toast('Yedek indiriliyor')});
-$('#importFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const d=JSON.parse(reader.result);if(!d||!Array.isArray(d.sales)||!Array.isArray(d.days))throw Error('Kayıt biçimi hatalı');if(!confirm('Yedek yüklenince mevcut kayıtlar seçilen yedekle değişir. Devam edilsin mi?'))return;cfg={...defaultCfg,...(d.cfg||{})};sales=d.sales;days=d.days;extSource=d.ext||{};ext={...defaultExt,...extSource};normalize();save();fillSettings();renderAll();hide('settingsModal');toast('Yedek başarıyla yüklendi')}catch(err){toast('Yedek açılamadı: '+err.message)}};reader.readAsText(file);e.target.value=''});
+$('#importFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const d=JSON.parse(reader.result);if(!d||!Array.isArray(d.sales)||!Array.isArray(d.days))throw Error('Kayıt biçimi hatalı');if(!confirm('Yedek yüklenince mevcut kayıtlar seçilen yedekle değişir. Devam edilsin mi?'))return;cfg={...defaultCfg,...(d.cfg||{})};sales=d.sales;days=d.days;extSource=d.ext||{};ext={...defaultExt,...extSource};normalize();save();fillSettings();fillEstimateInputs();renderAll();hide('settingsModal');toast('Yedek başarıyla yüklendi')}catch(err){toast('Yedek açılamadı: '+err.message)}};reader.readAsText(file);e.target.value=''});
 function renderAll(){renderHome();renderStats();renderHistory()}
-fillSettings();renderAll();
+fillSettings();fillEstimateInputs();renderAll();
 })();
 </script>
 </body>
